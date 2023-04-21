@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon graphql/src/index.ts",
-    "auth": "nodemon auth/index.ts"
+    "auth": "nodemon auth/index.ts",
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "author": "Tatu Ihaksi",
   "license": "ISC",

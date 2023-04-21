@@ -1,7 +1,9 @@
 require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
 import typeDefs from './api/schemas';
 import resolvers from './api/resolvers';
 import {
@@ -13,7 +15,17 @@ import { applyMiddleware } from 'graphql-middleware';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { shield } from 'graphql-shield';
 import { createRateLimitRule } from 'graphql-rate-limit';
+import authenticate from './functions/authenticate';
 const app = express();
+
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: false,
+    contentSecurityPolicy: false,
+  })
+);
+app.use(cors<cors.CorsRequest>());
+app.use(express.json());
 
 (async () => {
   try {
@@ -45,7 +57,12 @@ const app = express();
       includeStacktraceInErrorResponses: false,
     });
     await server.start();
-    app.use('/graphql', express.json(), cors<cors.CorsRequest>());
+    app.use(
+      '/graphql',
+      expressMiddleware(server, {
+        context: async ({ req }) => authenticate(req),
+      })
+    );
 
     // app.use(notFound);
     // app.use(errorHandler);
