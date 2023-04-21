@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { UserTest } from '../src/interfaces/User';
+import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
 
 const postUser = (
   url: string | Function,
@@ -44,4 +45,48 @@ const postUser = (
   });
 };
 
-export { postUser };
+const loginUser = (
+  url: string | Function,
+  user: UserTest
+): Promise<LoginMessageResponse> => {
+  return new Promise((resolve, reject) => {
+    request(url)
+      .post('/graphql')
+      .set('Content-type', 'application/json')
+      .send({
+        query: `mutation Login($credentials: Credentials!) {
+          login(credentials: $credentials) {
+            message
+            token
+            user {
+              email
+              id
+              user_name
+            }
+          }
+        }`,
+        variables: {
+          credentials: {
+            username: user.email,
+            password: user.password,
+          },
+        },
+      })
+      .expect(200, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          console.log('login response', response.body);
+          const userData = response.body.data.login;
+          expect(userData).toHaveProperty('message');
+          expect(userData).toHaveProperty('token');
+          expect(userData).toHaveProperty('user');
+          expect(userData.user).toHaveProperty('id');
+          expect(userData.user.email).toBe(user.email);
+          resolve(response.body.data.login);
+        }
+      });
+  });
+};
+
+export { postUser, loginUser };
