@@ -4,6 +4,10 @@ import randomstring from 'randomstring';
 import { UserTest } from '../src/interfaces/User';
 import { loginUser, postUser } from './userFunctions';
 import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
+import { ItemTest } from '../src/interfaces/Item';
+import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
+import { Category, CategoryTest } from '../src/interfaces/Category';
+import { postCategory } from './categoryFunctions';
 
 describe('Testing graphql api', () => {
   beforeAll(async () => {
@@ -31,4 +35,28 @@ describe('Testing graphql api', () => {
   it('should login user', async () => {
     userData = await loginUser(app, testUser);
   });
+
+  let testCategory: CategoryTest = {
+    category_name: 'test category' + randomstring.generate(7),
+  };
+  it('should create a new category', async () => {
+    testCategory = await postCategory(app, testCategory, userData.token!);
+  });
+
+  // let uploadData: UploadMessageResponse;
+  // let itemData: ItemTest;
+
+  // it('should create an item', async () => {
+  //   itemData = {
+  //     itemName: 'Test Item ' + randomstring.generate(7),
+  //     createdDate: new Date(),
+  //     description: 'This is a test item',
+  //     category: testCategory,
+  //     location: {
+  //       type: 'Point',
+  //       coordinates: [60.17045, 24.94254],
+  //     },
+  //     filename: 'testfile.jpg',
+  //   };
+  // });
 });
