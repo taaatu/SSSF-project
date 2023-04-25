@@ -1,56 +1,50 @@
 import { useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
-import { register } from '../graphql/queriesUser';
-import { User } from '../interfaces/User';
+import { login } from '../graphql/queriesUser';
+import { Credentials } from '../interfaces/Credentials';
+import LoginMessageResponse from '../interfaces/LoginMessageResponse';
 import { Link } from 'react-router-dom';
-import { loginPath } from '../utils/RouterPaths';
-import CheckIfLoggedIn from './CheckIfLoggedIn';
+import { registerPath } from '../utils/RouterPaths';
 
-function Register() {
+function Home() {
   const [username, setUsername] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const url = 'http://localhost:3000/graphql';
-      const user: User = {
-        user_name: username,
-        email: email,
+      const credentials: Credentials = {
+        username: username,
         password: password,
       };
-      const res = await doGraphQLFetch(url, register, { user });
+      const res = (await doGraphQLFetch(url, login, {
+        credentials,
+      })) as LoginMessageResponse;
       console.log('submit', res);
     } catch (error) {
       console.error('login submit', error);
     }
   };
-
   return (
     <div>
-      <CheckIfLoggedIn />
-      <h1>Register</h1>
+      <h1>Home page</h1>
       <form className="column" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Login" />
       </form>
-      <Link to={loginPath}>Login</Link>
+      <Link to={registerPath}>Register</Link>
     </div>
   );
 }
 
-export default Register;
+export default Home;

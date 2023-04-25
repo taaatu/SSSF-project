@@ -1,9 +1,28 @@
 import { GraphQLError } from 'graphql';
-import { User } from '../../interfaces/User';
+import { User, UserIdWithToken } from '../../interfaces/User';
 import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 
 export default {
-  Query: {},
+  Query: {
+    checkToken: async (
+      _parent: unknown,
+      _args: unknown,
+      user: UserIdWithToken
+    ) => {
+      const response = await fetch(`${process.env.AUTH_URL}/users/token`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new GraphQLError(response.statusText, {
+          extensions: { code: 'NOT_FOUND' },
+        });
+      }
+      const userFromAuth = await response.json();
+      return userFromAuth;
+    },
+  },
   Mutation: {
     login: async (
       _parent: unknown,

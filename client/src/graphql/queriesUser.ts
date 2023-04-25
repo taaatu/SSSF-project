@@ -12,7 +12,7 @@ mutation Login($credentials: Credentials!) {
   }
   `;
 
-const checkToken = `
+const checkTokenQuery = `
 query CheckToken {
     checkToken {
       message
@@ -36,4 +36,4 @@ mutation Mutation($user: UserInput!) {
   }
   `;
 
-export { login, checkToken, register };
+export { login, checkTokenQuery, register };

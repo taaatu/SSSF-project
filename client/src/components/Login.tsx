@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
-import { login } from '../graphql/queries';
+import { login } from '../graphql/queriesUser';
 import { Credentials } from '../interfaces/Credentials';
 import LoginMessageResponse from '../interfaces/LoginMessageResponse';
 import { Link } from 'react-router-dom';
 import { registerPath } from '../utils/RouterPaths';
+import CheckIfLoggedIn from './CheckIfLoggedIn';
 
 function Login() {
   const [username, setUsername] = useState<string>('');
@@ -21,13 +22,20 @@ function Login() {
       const res = (await doGraphQLFetch(url, login, {
         credentials,
       })) as LoginMessageResponse;
-      console.log('submit', res);
+      const token = res.login.token;
+      if (token === undefined) {
+        console.log('no token');
+        return;
+      }
+      localStorage.setItem('token', token);
     } catch (error) {
       console.error('login submit', error);
     }
   };
+
   return (
     <div>
+      <CheckIfLoggedIn />
       <h1>Login</h1>
       <form className="column" onSubmit={handleSubmit}>
         <input
