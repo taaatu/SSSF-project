@@ -1,4 +1,5 @@
 const registerPath = '/register';
 const loginPath = '/login';
+const createPath = '/create';
 
-export { loginPath, registerPath };
+export { loginPath, registerPath, createPath };
