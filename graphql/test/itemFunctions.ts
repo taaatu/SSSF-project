@@ -43,8 +43,8 @@ const postItem = (
       .set('Content-type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        query: `mutation CreateItem($itemName: String!, $createdDate: DateTime!, $description: String!, $category: ID!, $filename: String!) {
-            createItem(item_name: $itemName, description: $description, created_date: $createdDate, category: $category, filename: $filename) {
+        query: `mutation CreateItem($itemName: String!, $createdDate: DateTime!, $description: String!, $category: ID!, $filename: String!, $location: LocationInput!) {
+            createItem(item_name: $itemName, description: $description, created_date: $createdDate, category: $category, filename: $filename, location: $location) {
               id
               item_name
               created_date

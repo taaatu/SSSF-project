@@ -8,6 +8,7 @@ type Item {
   owner: User!
   category: Category!
   filename: String
+  location: Location
 }
 
 type Location {
@@ -38,5 +39,6 @@ type Mutation {
     created_date: DateTime!
     category: ID!
     filename: String
+    location: LocationInput
   ): Item
 }

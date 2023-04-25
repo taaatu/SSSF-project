@@ -6,10 +6,10 @@ import { loginUser, postUser } from './userFunctions';
 import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
 import { ItemTest } from '../src/interfaces/Item';
 import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
-import { Category, CategoryTest } from '../src/interfaces/Category';
+import { CategoryTest } from '../src/interfaces/Category';
 import { postCategory } from './categoryFunctions';
 import { postFile, postItem } from './itemFunctions';
-import { locationInput } from '../src/interfaces/Location';
+import { Point } from 'geojson';
 
 const uploadApp = process.env.UPLOAD_URL as string;
 
@@ -50,17 +50,16 @@ describe('Testing graphql api', () => {
   let uploadData: UploadMessageResponse;
   let itemData: ItemTest;
 
-  it('should upload a cat', async () => {
+  // test upload file
+  it('should upload a file', async () => {
     uploadData = await postFile(uploadApp, userData.token!);
-    // catData1 = {
-    //   catName: 'Test Cat' + randomstring.generate(7),
-    //   weight: 5,
-    //   birthdate: new Date('2022-01-01'),
-    //   filename: uploadData1.data.filename,
-    //   location: uploadData1.data.location,
-    // };
   });
+  const testLocation = {
+    type: 'Point',
+    coordinates: [24.9384, 60.1699],
+  } as Point;
 
+  // test create item
   it('should create an item', async () => {
     itemData = {
       itemName: 'Test Item ' + randomstring.generate(7),
@@ -68,6 +67,7 @@ describe('Testing graphql api', () => {
       description: 'This is a test item',
       category: testCategory.id,
       filename: 'testfile.jpg',
+      location: testLocation,
     };
     const item = await postItem(app, itemData, userData.token!);
     console.log(item);
