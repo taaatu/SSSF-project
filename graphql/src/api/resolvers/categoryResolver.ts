@@ -2,6 +2,7 @@ import { GraphQLError } from 'graphql';
 import { Category } from '../../interfaces/Category';
 import { UserIdWithToken } from '../../interfaces/User';
 import categoryModel from '../models/categoryModel';
+import checkAuthorization from '../../utils/checkAuthorization';
 
 export default {
   Query: {},
@@ -11,11 +12,7 @@ export default {
       args: Category,
       user: UserIdWithToken
     ) => {
-      if (!user.token) {
-        throw new GraphQLError('Unauthorized', {
-          extensions: { code: 'UNAUTHORIZED' },
-        });
-      }
+      checkAuthorization(user);
       const category = new categoryModel(args);
       return await category.save();
     },

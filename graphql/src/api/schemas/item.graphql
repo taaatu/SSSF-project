@@ -1,0 +1,42 @@
+scalar DateTime
+
+type Item {
+  id: ID!
+  item_name: String!
+  created_date: DateTime!
+  description: String!
+  owner: User!
+  category: Category!
+  filename: String
+}
+
+type Location {
+  type: String!
+  coordinates: [Float]!
+}
+
+input Coordinates {
+  lat: Float!
+  lng: Float!
+}
+
+input LocationInput {
+  type: String!
+  coordinates: [Float]!
+}
+
+type Query {
+  items: [Item]
+  itemById(id: ID!): Item
+  itemsByOwner(owner: ID!): [Item]
+}
+
+type Mutation {
+  createItem(
+    item_name: String!
+    description: String!
+    created_date: DateTime!
+    category: ID!
+    filename: String
+  ): Item
+}

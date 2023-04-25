@@ -10,10 +10,7 @@ const postCategory = async (
     request(url)
       .post('/graphql')
       .set('Content-type', 'application/json')
-      .set(
-        /*'Content-type', 'application/json'*/ 'Authorization',
-        `Bearer ${token}`
-      )
+      .set('Authorization', `Bearer ${token}`)
       .send({
         query: `mutation Mutation($categoryName: String!) {
             addCategory(category_name: $categoryName) {
