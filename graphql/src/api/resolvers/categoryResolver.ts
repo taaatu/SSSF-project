@@ -5,7 +5,11 @@ import categoryModel from '../models/categoryModel';
 import checkAuthorization from '../../utils/checkAuthorization';
 
 export default {
-  Query: {},
+  Query: {
+    categories: async () => {
+      return await categoryModel.find();
+    },
+  },
   Mutation: {
     addCategory: async (
       parent: undefined,
