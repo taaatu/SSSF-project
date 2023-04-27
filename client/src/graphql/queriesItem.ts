@@ -16,4 +16,19 @@ mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $
 }
 `;
 
-export { createItem };
+const itemsQuery = `
+query {
+  items {
+    item_name
+    created_date
+    owner {
+      user_name
+    }
+    category {
+      category_name
+    }
+  }
+}
+`;
+
+export { createItem, itemsQuery };
