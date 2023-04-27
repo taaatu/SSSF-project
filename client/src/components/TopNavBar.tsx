@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiUser } from 'react-icons/fi';
+import { createPath, logoutPath } from '../utils/RouterPaths';
 
 function TopNavBar() {
   return (
@@ -22,7 +23,7 @@ const MenuButton = () => {
       </div>
       {isMenuOpen && (
         <nav className="dropdown-content">
-          <Link to="/create">Create</Link>
+          <Link to={createPath}>Create</Link>
         </nav>
       )}
     </div>
@@ -38,7 +39,7 @@ const ProfileMenuButton = () => {
       </div>
       {isMenuOpen && (
         <nav className="dropdown-content">
-          <Link to="/logout">Logout</Link>
+          <Link to={logoutPath}>Logout</Link>
         </nav>
       )}
     </div>
