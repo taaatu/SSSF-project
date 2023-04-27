@@ -63,7 +63,6 @@ describe('Testing graphql api', () => {
   it('should create an item', async () => {
     itemData = {
       itemName: 'Test Item ' + randomstring.generate(7),
-      createdDate: new Date(),
       description: 'This is a test item',
       category: testCategory.id,
       filename: 'testfile.jpg',

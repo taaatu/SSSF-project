@@ -13,7 +13,6 @@ interface Item extends Document {
 
 interface ItemInput {
   itemName: string;
-  createdDate: Date;
   description: string;
   category: string;
   location: Point;

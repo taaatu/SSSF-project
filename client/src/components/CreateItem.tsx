@@ -58,7 +58,6 @@ function CreateItem() {
       console.log('filename', fileName);
       const itemData: ItemInput = {
         itemName: itemName,
-        createdDate: new Date(),
         description: description,
         category: category,
         filename: fileName,

@@ -36,7 +36,6 @@ type Mutation {
   createItem(
     item_name: String!
     description: String!
-    created_date: DateTime!
     category: ID!
     filename: String
     location: LocationInput

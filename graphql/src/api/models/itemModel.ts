@@ -8,7 +8,9 @@ const itemSchema = new mongoose.Schema<Item>({
   },
   created_date: {
     type: Date,
-    required: true,
+    default: Date.now,
+    immutable: true,
+    // required: true,
   },
   description: {
     type: String,
