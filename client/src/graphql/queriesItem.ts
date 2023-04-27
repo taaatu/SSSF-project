@@ -27,6 +27,7 @@ query {
     category {
       category_name
     }
+    filename
   }
 }
 `;

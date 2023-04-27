@@ -26,6 +26,7 @@ interface ItemCardData {
   created_date: Date;
   owner: Pick<User, 'user_name'>;
   category: Pick<Category, 'category_name'>;
+  filename: string;
 }
 
 export type { Item, ItemInput, ItemCardData };
