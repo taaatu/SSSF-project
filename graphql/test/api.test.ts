@@ -8,7 +8,7 @@ import { ItemTest } from '../src/interfaces/Item';
 import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
 import { CategoryTest } from '../src/interfaces/Category';
 import { postCategory } from './categoryFunctions';
-import { postFile, postItem } from './itemFunctions';
+import { postFile, postItem, userDeleteItem } from './itemFunctions';
 import { Point } from 'geojson';
 
 const uploadApp = process.env.UPLOAD_URL as string;
@@ -60,6 +60,7 @@ describe('Testing graphql api', () => {
   } as Point;
 
   // test create item
+  let itemId: string;
   it('should create an item', async () => {
     itemData = {
       itemName: 'Test Item ' + randomstring.generate(7),
@@ -69,6 +70,11 @@ describe('Testing graphql api', () => {
       location: testLocation,
     };
     const item = await postItem(app, itemData, userData.token!);
-    console.log(item);
+    console.log('create test', item);
+    itemId = item.id!;
+  });
+
+  it('should delete an item', async () => {
+    await userDeleteItem(app, itemId, userData.token!);
   });
 });

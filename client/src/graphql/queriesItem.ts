@@ -50,4 +50,12 @@ query ($id: ID!) {
 }
 `;
 
-export { createItem, itemsQuery, itemByIdQuery };
+const deleteItemQuery = `
+mutation DeleteItem($id: ID!) {
+  deleteItem(id: $id) {
+    id
+  }
+}
+`;
+
+export { createItem, itemsQuery, itemByIdQuery, deleteItemQuery };

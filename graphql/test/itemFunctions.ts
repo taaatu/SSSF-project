@@ -79,4 +79,36 @@ const postItem = (
   });
 };
 
-export { postFile, postItem };
+const userDeleteItem = (
+  url: string | Function,
+  id: string,
+  token: string
+): Promise<ItemTest> => {
+  return new Promise((resolve, reject) => {
+    request(url)
+      .post('/graphql')
+      .set('Content-type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        query: `mutation DeleteItem($deleteItemId: ID!) {
+          deleteItem(id: $deleteItemId) {
+            id
+          }
+        }`,
+        variables: {
+          deleteItemId: id,
+        },
+      })
+      .expect(200, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          const deletedItem = response.body.data.deleteItem;
+          expect(deletedItem.id).toBe(id);
+          resolve(deletedItem);
+        }
+      });
+  });
+};
+
+export { postFile, postItem, userDeleteItem };

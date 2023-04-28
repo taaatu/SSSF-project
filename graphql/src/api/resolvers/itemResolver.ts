@@ -30,5 +30,24 @@ export default {
       const result = await item.save();
       return result;
     },
+    deleteItem: async (
+      _parent: undefined,
+      args: string,
+      user: UserIdWithToken
+    ) => {
+      const id = new Types.ObjectId(args);
+      const item = (await itemModel.findById(id)) as Item;
+
+      const userId = new Types.ObjectId(user.id);
+      const ownerId = item?.owner;
+
+      if (!user.token || !ownerId.equals(userId)) {
+        console.log('not owner');
+        throw new GraphQLError('Unauthorized', {
+          extensions: { code: 'UNAUTHORIZED' },
+        });
+      }
+      return await itemModel.findByIdAndDelete(id);
+    },
   },
 };
