@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import {
   createPath,
+  itemPath,
   loginPath,
   logoutPath,
   registerPath,
@@ -11,6 +12,7 @@ import {
 import CreateItem from './components/CreateItem';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
+import ItemPage from './pages/ItemPage';
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path={registerPath} element={<Register />} />
         <Route path={createPath} element={<CreateItem />} />
         <Route path={logoutPath} element={<Logout />} />
+        <Route path={itemPath} element={<ItemPage />} />
       </Routes>
     </BrowserRouter>
   );

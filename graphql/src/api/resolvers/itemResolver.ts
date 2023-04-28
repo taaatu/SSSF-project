@@ -9,6 +9,10 @@ export default {
     items: async () => {
       return await itemModel.find();
     },
+    itemById: async (_parent: undefined, args: string) => {
+      const id = new Types.ObjectId(args);
+      return await itemModel.findById(id);
+    },
   },
   Mutation: {
     createItem: async (

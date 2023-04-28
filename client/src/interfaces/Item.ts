@@ -7,9 +7,9 @@ interface Item extends Document {
   item_name: string;
   created_date: Date;
   description: string;
-  owner: Types.ObjectId;
-  category: Types.ObjectId;
-  location: Point;
+  owner: Pick<User, 'user_name'>;
+  category: Pick<Category, 'category_name'>;
+  // location: Point;
   filename: string;
 }
 
@@ -22,6 +22,7 @@ interface ItemInput {
 }
 
 interface ItemCardData {
+  id: string;
   item_name: string;
   created_date: Date;
   owner: Pick<User, 'user_name'>;

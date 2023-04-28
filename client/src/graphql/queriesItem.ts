@@ -19,6 +19,7 @@ mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $
 const itemsQuery = `
 query {
   items {
+    id
     item_name
     created_date
     owner {
@@ -32,4 +33,21 @@ query {
 }
 `;
 
-export { createItem, itemsQuery };
+const itemByIdQuery = `
+query ($id: ID!) {
+  itemById(id: $id) {
+    item_name
+    created_date
+    description
+    owner {
+      user_name
+    }
+    category {
+      category_name
+    }
+    filename
+  }
+}
+`;
+
+export { createItem, itemsQuery, itemByIdQuery };

@@ -6,6 +6,7 @@ import { ItemInput } from '../interfaces/Item';
 import { getAllCategoriesQuery } from '../graphql/queriesCategory';
 import { Category } from '../interfaces/Category';
 import UploadMessageResponse from '../interfaces/UploadMessageResponse';
+import TopNavBar from './TopNavBar';
 
 function CreateItem() {
   const [itemName, setItemName] = useState<string>('');
@@ -76,6 +77,7 @@ function CreateItem() {
   };
   return (
     <div>
+      <TopNavBar />
       <h1>Create an item</h1>
       <form className="column" onSubmit={handleSubmit}>
         <input

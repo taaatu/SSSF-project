@@ -22,7 +22,8 @@ const MenuButton = () => {
         <FiMenu />
       </div>
       {isMenuOpen && (
-        <nav className="dropdown-content">
+        <nav className="dropdown-content column">
+          <Link to="/">Home</Link>
           <Link to={createPath}>Create</Link>
         </nav>
       )}
