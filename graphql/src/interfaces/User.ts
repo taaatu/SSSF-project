@@ -18,6 +18,7 @@ interface UserTest {
 interface UserIdWithToken {
   id: string;
   token: string;
+  role: string;
 }
 
 export { User, UserTest, UserIdWithToken };

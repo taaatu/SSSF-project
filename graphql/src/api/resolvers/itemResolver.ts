@@ -41,7 +41,7 @@ export default {
       const userId = new Types.ObjectId(user.id);
       const ownerId = item?.owner;
 
-      if (!user.token || !ownerId.equals(userId)) {
+      if (!user.token || (!ownerId.equals(userId) && user.role !== 'admin')) {
         console.log('not owner');
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
