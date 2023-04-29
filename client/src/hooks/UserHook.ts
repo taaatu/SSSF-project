@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
-import { checkTokenQuery } from '../graphql/queriesUser';
+import {
+  checkTokenQuery,
+  deleteCurrentUserQuery,
+} from '../graphql/queriesUser';
 import { graphqlUrl } from '../utils/url';
 import { UserOutPut } from '../interfaces/User';
 
@@ -23,10 +26,27 @@ const useUser = () => {
       console.error('getCurrentUser', error);
     }
   };
+  const deleteCurrentUser = async () => {
+    try {
+      if (!token) {
+        return;
+      }
+      const res = await doGraphQLFetch(
+        graphqlUrl,
+        deleteCurrentUserQuery,
+        {},
+        token
+      );
+      console.log('deleteCurrentUser', res.deleteUser);
+      return res.deleteUser;
+    } catch (error) {
+      console.error('delete user', error);
+    }
+  };
   useEffect(() => {
     getCurrentUser();
   }, []);
-  return { currentUser };
+  return { currentUser, deleteCurrentUser };
 };
 
 export default useUser;

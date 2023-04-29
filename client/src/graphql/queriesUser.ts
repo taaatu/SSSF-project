@@ -38,4 +38,17 @@ mutation Mutation($user: UserInput!) {
   }
   `;
 
-export { login, checkTokenQuery, register };
+const deleteCurrentUserQuery = `
+  mutation DeleteUser {
+    deleteUser {
+      message
+      user {
+        id
+        user_name
+        email
+      }
+    }
+  }
+  `;
+
+export { login, checkTokenQuery, register, deleteCurrentUserQuery };
