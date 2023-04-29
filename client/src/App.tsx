@@ -8,6 +8,7 @@ import {
   loginPath,
   logoutPath,
   modifyItemPath,
+  profilePath,
   registerPath,
 } from './utils/RouterPaths';
 import CreateItem from './pages/CreateItem';
@@ -15,6 +16,7 @@ import Home from './pages/Home';
 import Logout from './pages/Logout';
 import ItemPage from './pages/ItemPage';
 import ModifyItem from './pages/ModifyItem';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Route path={logoutPath} element={<Logout />} />
         <Route path={itemPath} element={<ItemPage />} />
         <Route path={modifyItemPath} element={<ModifyItem />} />
+        <Route path={profilePath} element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

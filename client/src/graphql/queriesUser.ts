@@ -18,6 +18,8 @@ query CheckToken {
       message
       user {
         user_name
+        id
+        email
       }
     }
   }

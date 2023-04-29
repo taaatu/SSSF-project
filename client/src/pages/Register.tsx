@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
 import { register } from '../graphql/queriesUser';
-import { User } from '../interfaces/User';
+import { RegisterInput, User } from '../interfaces/User';
 import { Link } from 'react-router-dom';
 import { loginPath } from '../utils/RouterPaths';
 import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
@@ -14,7 +14,7 @@ function Register() {
     e.preventDefault();
     try {
       const url = 'http://localhost:3000/graphql';
-      const user: User = {
+      const user: RegisterInput = {
         user_name: username,
         email: email,
         password: password,

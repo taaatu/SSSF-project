@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { doGraphQLFetch } from '../graphql/fetch';
 import { fileUrl, graphqlUrl } from '../utils/url';
 import { deleteItemQuery, itemByIdQuery } from '../graphql/queriesItem';
@@ -34,6 +34,12 @@ function ItemPage() {
       <p>{item.item_name}</p>
       <p>{item.description}</p>
       <p>owner: {item.owner.user_name}</p>
+      <div>
+        owner:{' '}
+        <Link to={`/profile/${item.owner.user_name}`}>
+          {item.owner.user_name}
+        </Link>
+      </div>
       <p>category: {item.category.category_name}</p>
       {id !== undefined && <DeleteButton itemId={id} />}
       <button onClick={() => navigate(`/item/modify/${id}`)}>Modify</button>

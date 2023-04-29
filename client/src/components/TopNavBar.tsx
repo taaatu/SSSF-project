@@ -36,10 +36,14 @@ const ProfileMenuButton = () => {
   return (
     <div id="profile-menu-btn">
       <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        {localStorage.getItem('username')}
         <FiUser />
       </div>
       {isMenuOpen && (
-        <nav className="dropdown-content">
+        <nav className="dropdown-content column">
+          <Link to={`/profile/${localStorage.getItem('username')}`}>
+            Profile
+          </Link>
           <Link to={logoutPath}>Logout</Link>
         </nav>
       )}

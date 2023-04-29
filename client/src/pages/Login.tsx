@@ -28,6 +28,7 @@ function Login() {
         return;
       }
       localStorage.setItem('token', token);
+      localStorage.setItem('username', res.login.user.user_name);
     } catch (error) {
       console.error('login submit', error);
     }
