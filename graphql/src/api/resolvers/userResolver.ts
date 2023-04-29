@@ -74,5 +74,30 @@ export default {
       const user = (await response.json()) as LoginMessageResponse;
       return user;
     },
+    deleteUser: async (
+      _parent: unknown,
+      _args: unknown,
+      user: UserIdWithToken
+    ) => {
+      if (!user.token) {
+        throw new GraphQLError('Unauthorized', {
+          extensions: { code: 'UNAUTHORIZED' },
+        });
+      }
+      const response = await fetch(`${process.env.AUTH_URL}/users`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new GraphQLError(response.statusText, {
+          extensions: { code: 'NOT_FOUND' },
+        });
+      }
+      const userFromDelete = (await response.json()) as LoginMessageResponse;
+      return userFromDelete;
+    },
   },
 };

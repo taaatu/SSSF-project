@@ -2,7 +2,7 @@ import app from '../src/app';
 import mongoose from 'mongoose';
 import randomstring from 'randomstring';
 import { UserTest } from '../src/interfaces/User';
-import { loginUser, postUser } from './userFunctions';
+import { deleteUser, loginUser, postUser } from './userFunctions';
 import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
 import { ItemTest } from '../src/interfaces/Item';
 import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
@@ -89,5 +89,9 @@ describe('Testing graphql api', () => {
 
   it('should delete an item', async () => {
     await userDeleteItem(app, itemId, userData.token!);
+  });
+
+  it('should delete current user', async () => {
+    await deleteUser(app, userData.token!);
   });
 });

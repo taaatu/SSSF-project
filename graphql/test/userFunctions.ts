@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { UserTest } from '../src/interfaces/User';
 import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
+import ErrorResponse from '../src/interfaces/ErrorResponse';
 
 const postUser = (
   url: string | Function,
@@ -89,4 +90,37 @@ const loginUser = (
   });
 };
 
-export { postUser, loginUser };
+const deleteUser = (
+  url: string | Function,
+  token: string
+): Promise<ErrorResponse> => {
+  return new Promise((resolve, reject) => {
+    request(url)
+      .post('/graphql')
+      .set('Authorization', 'Bearer ' + token)
+      .send({
+        query: `mutation DeleteUser {
+          deleteUser {
+            message
+            user {
+              id
+              user_name
+              email
+            }
+          }
+        }`,
+      })
+      .expect(200, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          const userData = response.body.data.deleteUser;
+          expect(userData).toHaveProperty('message');
+          expect(userData).toHaveProperty('user');
+          resolve(response.body.data.deleteUser);
+        }
+      });
+  });
+};
+
+export { postUser, loginUser, deleteUser };
