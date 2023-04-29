@@ -30,6 +30,25 @@ export default {
       const result = await item.save();
       return result;
     },
+    modifyItem: async (
+      _parent: undefined,
+      args: Item,
+      user: UserIdWithToken
+    ) => {
+      const item = (await itemModel.findById(args.id)) as Item;
+      if (
+        !user.token ||
+        (!item.owner.equals(user.id) && user.role !== 'admin')
+      ) {
+        console.log('not authorized');
+        throw new GraphQLError('Not authorized', {
+          extensions: { code: 'NOT_AUTHORIZED' },
+        });
+      }
+      return await itemModel.findByIdAndUpdate(args.id, args, {
+        new: true,
+      });
+    },
     deleteItem: async (
       _parent: undefined,
       args: string,

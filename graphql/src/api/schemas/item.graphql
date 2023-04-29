@@ -40,5 +40,13 @@ type Mutation {
     filename: String
     location: LocationInput
   ): Item
+  modifyItem(
+    id: ID!
+    item_name: String
+    description: String
+    category: ID
+    filename: String
+    location: LocationInput
+  ): Item
   deleteItem(id: ID!): Item
 }

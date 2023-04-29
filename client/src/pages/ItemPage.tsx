@@ -8,6 +8,7 @@ import TopNavBar from '../components/TopNavBar';
 
 function ItemPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [item, setItem] = useState<Item>();
 
   const getItem = async () => {
@@ -35,6 +36,7 @@ function ItemPage() {
       <p>owner: {item.owner.user_name}</p>
       <p>category: {item.category.category_name}</p>
       {id !== undefined && <DeleteButton itemId={id} />}
+      <button onClick={() => navigate(`/item/modify/${id}`)}>Modify</button>
     </div>
   );
 }

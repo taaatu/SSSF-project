@@ -1,7 +1,6 @@
-const registerPath = '/register';
-const loginPath = '/login';
-const createPath = '/create';
-const logoutPath = '/logout';
-const itemPath = '/item/:id';
-
-export { loginPath, registerPath, createPath, logoutPath, itemPath };
+export const registerPath = '/register';
+export const loginPath = '/login';
+export const createPath = '/create';
+export const logoutPath = '/logout';
+export const itemPath = '/item/:id';
+export const modifyItemPath = '/item/modify/:id';

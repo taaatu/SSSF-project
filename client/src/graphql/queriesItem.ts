@@ -1,5 +1,5 @@
 const createItem = `
-mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $filename: String!, $location: LocationInput!) {
+mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $filename: String!, $location: LocationInput) {
     createItem(item_name: $itemName, description: $description, category: $category, filename: $filename, location: $location) {
       id
       item_name
@@ -14,6 +14,14 @@ mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $
       filename
     }
 }
+`;
+
+const modifyItemQuery = `
+  mutation ModifyItem($id: ID!, $itemName: String, $description: String, $category: ID, $filename: String, $location: LocationInput) {
+    modifyItem(id: $id, item_name: $itemName, description: $description, category: $category, filename: $filename, location: $location) {
+      id
+    }
+  }
 `;
 
 const itemsQuery = `
@@ -44,6 +52,7 @@ query ($id: ID!) {
     }
     category {
       category_name
+      id
     }
     filename
   }
@@ -58,4 +67,10 @@ mutation DeleteItem($id: ID!) {
 }
 `;
 
-export { createItem, itemsQuery, itemByIdQuery, deleteItemQuery };
+export {
+  createItem,
+  itemsQuery,
+  itemByIdQuery,
+  deleteItemQuery,
+  modifyItemQuery,
+};
