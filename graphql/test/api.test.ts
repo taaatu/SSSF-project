@@ -15,6 +15,8 @@ import {
   userPutItem,
 } from './itemFunctions';
 import { Point } from 'geojson';
+import { RentDealTest } from '../src/interfaces/RentDeal';
+import { postRentDeal } from './rentDealDunctions';
 
 const uploadApp = process.env.UPLOAD_URL as string;
 
@@ -85,6 +87,15 @@ describe('Testing graphql api', () => {
       description: 'This is a modified test item',
     };
     await userPutItem(app, newItem, itemId, userData.token!);
+  });
+
+  it('should create a rent deal', async () => {
+    const rentDeal: RentDealTest = {
+      item: new mongoose.Types.ObjectId(itemId),
+      startDate: new Date('2021-04-20'),
+      endDate: new Date('2021-04-30'),
+    };
+    await postRentDeal(app, rentDeal, userData.token!);
   });
 
   it('should delete an item', async () => {

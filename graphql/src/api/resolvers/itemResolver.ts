@@ -3,8 +3,15 @@ import { GraphQLError } from 'graphql';
 import { Item } from '../../interfaces/Item';
 import { UserIdWithToken } from '../../interfaces/User';
 import itemModel from '../models/itemModel';
+import { RentDeal } from '../../interfaces/RentDeal';
+import rentDealModel from '../models/rentDealModel';
 
 export default {
+  RentDeal: {
+    item: async (parent: RentDeal) => {
+      return await rentDealModel.findById(parent.item);
+    },
+  },
   Query: {
     items: async () => {
       return await itemModel.find();

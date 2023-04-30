@@ -2,12 +2,27 @@ import { GraphQLError } from 'graphql';
 import { User, UserIdWithToken } from '../../interfaces/User';
 import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 import { Item } from '../../interfaces/Item';
+import { RentDeal } from '../../interfaces/RentDeal';
 
 export default {
   Item: {
     owner: async (parent: Item) => {
       const response = await fetch(
         `${process.env.AUTH_URL}/users/${parent.owner}`
+      );
+      if (!response.ok) {
+        throw new GraphQLError(response.statusText, {
+          extensions: { code: 'NOT_FOUND' },
+        });
+      }
+      const user = (await response.json()) as User;
+      return user;
+    },
+  },
+  RentDeal: {
+    item_user: async (parent: RentDeal) => {
+      const response = await fetch(
+        `${process.env.AUTH_URL}/users/${parent.item_user}`
       );
       if (!response.ok) {
         throw new GraphQLError(response.statusText, {

@@ -1,0 +1,29 @@
+scalar DateTime
+
+type RentDeal {
+  id: ID!
+  item: Item!
+  start_date: DateTime!
+  end_date: DateTime!
+  created_date: DateTime!
+  item_user: User!
+  status: Status!
+}
+
+enum Status {
+  PENDING
+  ACCEPTED
+  REJECTED
+  RETURNED
+}
+
+type Mutation {
+  createRentDeal(
+    item: ID!
+    start_date: DateTime!
+    end_date: DateTime!
+  ): RentDeal!
+  acceptRentDeal(rent_deal_id: ID!): RentDeal!
+  rejectRentDeal(rent_deal_id: ID!): RentDeal!
+  endRentDeal(rent_deal_id: ID!): RentDeal!
+}
