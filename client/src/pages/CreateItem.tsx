@@ -7,6 +7,7 @@ import { getAllCategoriesQuery } from '../graphql/queriesCategory';
 import { Category } from '../interfaces/Category';
 import TopNavBar from '../components/TopNavBar';
 import { uploadFile } from '../utils/uploadFile';
+import AddLocationMap from '../components/AddLocationMap';
 
 function CreateItem() {
   const [itemName, setItemName] = useState<string>('');
@@ -14,6 +15,8 @@ function CreateItem() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [category, setCategory] = useState<string>('');
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [mapIsOpen, setMapIsOpen] = useState<boolean>(false);
+  const [coordinates, setCoordinates] = useState<number[]>();
 
   const getCategories = async () => {
     const res = await doGraphQLFetch(
@@ -29,13 +32,22 @@ function CreateItem() {
     getCategories();
   }, []);
 
+  const openMap = (event: any) => {
+    event.preventDefault();
+    setMapIsOpen(true);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const url = 'http://localhost:3000/graphql';
+      if (coordinates === undefined) {
+        alert('Location has not been set');
+        return;
+      }
       const testLocation = {
         type: 'Point',
-        coordinates: [24.9384, 60.1699],
+        coordinates: coordinates,
       } as Point;
       if (imageFile === null) {
         alert('no image');
@@ -95,7 +107,14 @@ function CreateItem() {
           ></input>
         </label>
 
-        {/* <button>Choose location</button> */}
+        <button onClick={openMap}>Choose location</button>
+        {mapIsOpen && (
+          <AddLocationMap
+            setCoordinates={setCoordinates}
+            setIsMapOpen={setMapIsOpen}
+            coordinates={coordinates}
+          />
+        )}
         <input type="submit" value="Create" />
       </form>
     </div>

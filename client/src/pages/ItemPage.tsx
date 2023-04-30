@@ -5,11 +5,13 @@ import { fileUrl, graphqlUrl } from '../utils/url';
 import { deleteItemQuery, itemByIdQuery } from '../graphql/queriesItem';
 import { Item } from '../interfaces/Item';
 import TopNavBar from '../components/TopNavBar';
+import ShowLocation from '../components/ShowLocation';
 
 function ItemPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState<Item>();
+  const [showLocation, setShowLocation] = useState<boolean>(false);
 
   const getItem = async () => {
     try {
@@ -40,6 +42,13 @@ function ItemPage() {
           {item.owner.user_name}
         </Link>
       </div>
+      <button onClick={() => setShowLocation(true)}>Show location</button>
+      {showLocation && (
+        <ShowLocation
+          setIsMapOpen={setShowLocation}
+          coordinates={item.location.coordinates}
+        />
+      )}
       <p>category: {item.category.category_name}</p>
       {id !== undefined && <DeleteButton itemId={id} />}
       <button onClick={() => navigate(`/item/modify/${id}`)}>Modify</button>

@@ -55,6 +55,10 @@ query ($id: ID!) {
       id
     }
     filename
+    location {
+      type
+      coordinates
+    }
   }
 }
 `;

@@ -9,7 +9,7 @@ interface Item extends Document {
   description: string;
   owner: Pick<User, 'user_name'>;
   category: Category;
-  // location: Point;
+  location: Point;
   filename: string;
 }
 
