@@ -7,6 +7,7 @@ type RentDeal {
   end_date: DateTime!
   created_date: DateTime!
   item_user: User!
+  item_owner: User!
   status: Status!
 }
 
@@ -17,11 +18,19 @@ enum Status {
   RETURNED
 }
 
+type Query {
+  rentDeals: [RentDeal!]!
+  rentDeal(id: ID!): RentDeal!
+  rentDealsReceived: [RentDeal]
+  rentDealsSent: [RentDeal]
+}
+
 type Mutation {
   createRentDeal(
     item: ID!
     start_date: DateTime!
     end_date: DateTime!
+    item_owner: ID!
   ): RentDeal!
   acceptRentDeal(rent_deal_id: ID!): RentDeal!
   rejectRentDeal(rent_deal_id: ID!): RentDeal!

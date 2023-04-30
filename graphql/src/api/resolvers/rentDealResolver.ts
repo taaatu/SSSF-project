@@ -6,7 +6,44 @@ import { Types } from 'mongoose';
 import rentDealModel from '../models/rentDealModel';
 
 export default {
-  Query: {},
+  Query: {
+    rentDeals: async () => {
+      return await rentDealModel.find();
+    },
+    rentDeal: async (
+      _parent: undefined,
+      args: string,
+      user: UserIdWithToken
+    ) => {},
+    rentDealsReceived: async (
+      _parent: undefined,
+      _args: undefined,
+      user: UserIdWithToken
+    ) => {
+      if (!user.token) {
+        throw new GraphQLError('Unauthorized', {
+          extensions: { code: 'UNAUTHORIZED' },
+        });
+      }
+      return await rentDealModel.find({
+        item_owner: '644ec4ae5fe330a77ad529d0' as unknown as Types.ObjectId,
+      });
+    },
+    rentDealsSent: async (
+      _parent: undefined,
+      _args: undefined,
+      user: UserIdWithToken
+    ) => {
+      if (!user.token) {
+        throw new GraphQLError('Unauthorized', {
+          extensions: { code: 'UNAUTHORIZED' },
+        });
+      }
+      return await rentDealModel.find({
+        item_user: user.id as unknown as Types.ObjectId,
+      });
+    },
+  },
   Mutation: {
     createRentDeal: async (
       _parent: undefined,

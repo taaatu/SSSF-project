@@ -4,7 +4,7 @@ import randomstring from 'randomstring';
 import { UserTest } from '../src/interfaces/User';
 import { deleteUser, loginUser, postUser } from './userFunctions';
 import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
-import { ItemTest } from '../src/interfaces/Item';
+import { Item, ItemTest } from '../src/interfaces/Item';
 import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
 import { CategoryTest } from '../src/interfaces/Category';
 import { postCategory } from './categoryFunctions';
@@ -56,6 +56,7 @@ describe('Testing graphql api', () => {
 
   let uploadData: UploadMessageResponse;
   let itemData: ItemTest;
+  let testItem: Item;
 
   // test upload file
   it('should upload a file', async () => {
@@ -78,6 +79,7 @@ describe('Testing graphql api', () => {
     };
     const item = await postItem(app, itemData, userData.token!);
     console.log('create test', item);
+    testItem = item as unknown as Item;
     itemId = item.id!;
   });
 
@@ -94,6 +96,7 @@ describe('Testing graphql api', () => {
       item: new mongoose.Types.ObjectId(itemId),
       startDate: new Date('2021-04-20'),
       endDate: new Date('2021-04-30'),
+      itemOwner: new mongoose.Types.ObjectId(testItem.owner.id),
     };
     await postRentDeal(app, rentDeal, userData.token!);
   });

@@ -25,6 +25,11 @@ const rentDealSchema = new mongoose.Schema<RentDeal>({
     ref: 'User',
     required: true,
   },
+  item_owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   status: {
     type: String,
     enum: ['PENDING', 'ACCEPTED', 'REJECTED', 'RETURNED'],

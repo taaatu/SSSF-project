@@ -12,8 +12,8 @@ const postRentDeal = (
       .set('Content-type', 'application/json')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        query: `mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!) {
-              createRentDeal(item: $item, start_date: $startDate, end_date: $endDate) {
+        query: `mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!, $itemOwner: ID!) {
+              createRentDeal(item: $item, start_date: $startDate, end_date: $endDate, item_owner: $itemOwner) {
                 id
                 start_date
                 end_date

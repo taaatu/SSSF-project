@@ -6,6 +6,7 @@ interface RentDeal extends Document {
   end_date: Date;
   created_date: Date;
   item_user: Types.ObjectId;
+  item_owner: Types.ObjectId;
   status: string;
 }
 
@@ -20,6 +21,8 @@ interface RentDealTest {
   createdDate?: Date;
   item_user?: Types.ObjectId;
   itemUser?: Types.ObjectId;
+  item_owner?: Types.ObjectId;
+  itemOwner?: Types.ObjectId;
   status?: string;
 }
 
