@@ -27,28 +27,33 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="auth-div">
       <CheckIfLoggedIn />
       <h1>Register</h1>
-      <form className="column" onSubmit={handleSubmit}>
+      <form className="my-form column" onSubmit={handleSubmit}>
         <input
+          className="form-input"
           type="text"
           placeholder="Username"
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
+          className="form-input"
           type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          className="form-input"
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="submit" value="Register" />
+        <button type="submit">Register</button>
+        <Link className="nav-link" to={loginPath}>
+          Login
+        </Link>
       </form>
-      <Link to={loginPath}>Login</Link>
     </div>
   );
 }

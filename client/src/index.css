@@ -46,6 +46,7 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  width: fit-content;
 }
 button:hover {
   border-color: #646cff;
@@ -70,3 +71,36 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+.my-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 70%;
+  max-width: 400px;
+}
+
+.my-form button {
+  align-self: center;
+}
+
+.my-form .nav-link {
+  align-self: center;
+}
+
+.auth-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-input {
+  border-radius: 8px;
+  border: 1px solid #ADABF5;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.25s;
+}

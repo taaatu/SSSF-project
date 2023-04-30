@@ -6,6 +6,7 @@ import LoginMessageResponse from '../interfaces/LoginMessageResponse';
 import { Link } from 'react-router-dom';
 import { registerPath } from '../utils/RouterPaths';
 import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
+import { Button, Form } from 'react-bootstrap';
 
 function Login() {
   const [username, setUsername] = useState<string>('');
@@ -35,23 +36,28 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="auth-div">
       <CheckIfLoggedIn />
       <h1>Login</h1>
-      <form className="column" onSubmit={handleSubmit}>
+      <form className="my-form column" onSubmit={handleSubmit}>
         <input
+          className="form-input"
           type="text"
           placeholder="Email"
           onChange={(e) => setUsername(e.target.value)}
         />
+
         <input
+          className="form-input"
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="submit" value="Login" />
+        <Button type="submit">Login</Button>
+        <Link className="nav-link" to={registerPath}>
+          Register
+        </Link>
       </form>
-      <Link to={registerPath}>Register</Link>
     </div>
   );
 }
