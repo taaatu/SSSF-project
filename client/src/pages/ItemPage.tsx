@@ -52,6 +52,7 @@ function ItemPage() {
       <p>category: {item.category.category_name}</p>
       {id !== undefined && <DeleteButton itemId={id} />}
       <button onClick={() => navigate(`/item/modify/${id}`)}>Modify</button>
+      <button onClick={() => navigate(`/item/rent/${id}`)}>Ask for rent</button>
     </div>
   );
 }

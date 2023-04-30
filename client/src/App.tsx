@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import {
   createPath,
+  createRentDealPath,
   itemPath,
   loginPath,
   logoutPath,
@@ -17,6 +18,7 @@ import Logout from './pages/Logout';
 import ItemPage from './pages/ItemPage';
 import ModifyItem from './pages/ModifyItem';
 import Profile from './pages/Profile';
+import CreateRentDeal from './pages/CreateRentDeal';
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
         <Route path={itemPath} element={<ItemPage />} />
         <Route path={modifyItemPath} element={<ModifyItem />} />
         <Route path={profilePath} element={<Profile />} />
+        <Route path={createRentDealPath} element={<CreateRentDeal />} />
       </Routes>
     </BrowserRouter>
   );

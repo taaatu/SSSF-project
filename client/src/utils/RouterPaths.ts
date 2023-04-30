@@ -5,3 +5,4 @@ export const logoutPath = '/logout';
 export const itemPath = '/item/:id';
 export const modifyItemPath = '/item/modify/:id';
 export const profilePath = '/profile/:username';
+export const createRentDealPath = '/item/rent/:id';
