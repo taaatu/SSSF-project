@@ -7,7 +7,7 @@ import LoginMessageResponse from '../src/interfaces/LoginMessageResponse';
 import { Item, ItemTest } from '../src/interfaces/Item';
 import UploadMessageResponse from '../src/interfaces/UploadMessageResponse';
 import { CategoryTest } from '../src/interfaces/Category';
-import { postCategory } from './categoryFunctions';
+import { deleteCategory, postCategory } from './categoryFunctions';
 import {
   postFile,
   postItem,
@@ -32,7 +32,7 @@ describe('Testing graphql api', () => {
   });
 
   const testUser: UserTest = {
-    user_name: 'Test User ' + randomstring.generate(7),
+    user_name: 'TestUser' + randomstring.generate(7),
     email: randomstring.generate(9) + '@user.fi',
     password: 'testpassword',
   };
@@ -47,6 +47,15 @@ describe('Testing graphql api', () => {
   // test login
   it('should login user', async () => {
     userData = await loginUser(app, testUser);
+  });
+
+  let userAdmin: LoginMessageResponse;
+  it('should login as admin', async () => {
+    const data: UserTest = {
+      email: 'admin@test.com',
+      password: process.env.ADMIN_PW,
+    };
+    userAdmin = await loginUser(app, data);
   });
 
   let testCategory: CategoryTest = {
@@ -119,6 +128,10 @@ describe('Testing graphql api', () => {
 
   it('should delete an item', async () => {
     await userDeleteItem(app, itemId, userData.token!);
+  });
+
+  it('should delete a category', async () => {
+    await deleteCategory(app, testCategory.id!, userAdmin.token!);
   });
 
   it('should delete current user', async () => {

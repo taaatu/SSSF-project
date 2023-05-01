@@ -36,4 +36,36 @@ const postCategory = async (
   });
 };
 
-export { postCategory };
+const deleteCategory = (
+  url: string | Function,
+  id: string,
+  token: string
+): Promise<CategoryTest> => {
+  return new Promise((resolve, reject) => {
+    request(url)
+      .post('/graphql')
+      .set('Content-type', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        query: `mutation DeleteCategory($id: ID!) {
+          deleteCategory(id: $id) {
+            id
+          }
+        }`,
+        variables: {
+          id: id,
+        },
+      })
+      .expect(200, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          const deletedCategory = response.body.data.deleteCategory;
+          expect(deletedCategory.id).toBe(id);
+          resolve(deletedCategory);
+        }
+      });
+  });
+};
+
+export { postCategory, deleteCategory };
