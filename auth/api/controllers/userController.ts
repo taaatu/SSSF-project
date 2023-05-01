@@ -50,7 +50,6 @@ const userPost = async (
     const user = req.body;
     user.password = await bcrypt.hash(user.password, salt);
     const newUser = await userModel.create(user);
-    console.log('///postUser called');
     const response: DBMessageResponse = {
       message: 'user created',
       user: {

@@ -36,6 +36,10 @@ function Register() {
           required
           type="text"
           placeholder="Username"
+          pattern="^[a-zA-Z0-9]*$"
+          title="Only letters and numbers are allowed"
+          maxLength={30}
+          minLength={2}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
