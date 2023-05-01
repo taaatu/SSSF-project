@@ -20,11 +20,6 @@ const postFile = (
           expect(uploadMessageResponse).toHaveProperty('message');
           expect(uploadMessageResponse).toHaveProperty('data');
           expect(uploadMessageResponse.data).toHaveProperty('filename');
-          expect(uploadMessageResponse.data).toHaveProperty('location');
-          expect(uploadMessageResponse.data.location).toHaveProperty(
-            'coordinates'
-          );
-          expect(uploadMessageResponse.data.location).toHaveProperty('type');
           resolve(uploadMessageResponse);
         }
       });

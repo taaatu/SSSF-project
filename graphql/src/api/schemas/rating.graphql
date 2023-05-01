@@ -1,0 +1,17 @@
+type Rating {
+  id: ID!
+  item: Item!
+  user: User!
+  value: Int!
+}
+
+type Query {
+  ratings: [Rating]
+  ratingsByItem(id: ID!): [Rating]
+}
+
+type Mutation {
+  addRating(item: ID!, value: Int!): Rating
+  modifyRating(id: ID!, value: Int!): Rating
+  deleteRating(id: ID!): Rating
+}

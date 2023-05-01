@@ -3,6 +3,8 @@ import { User, UserIdWithToken } from '../../interfaces/User';
 import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 import { Item } from '../../interfaces/Item';
 import { RentDeal } from '../../interfaces/RentDeal';
+import { Rating } from '../../interfaces/Rating';
+import getUser from '../../utils/getUser';
 
 export default {
   Item: {
@@ -31,6 +33,11 @@ export default {
       }
       const user = (await response.json()) as User;
       return user;
+    },
+  },
+  Rating: {
+    item: async (parent: Rating) => {
+      return await getUser(parent.user);
     },
   },
   Query: {

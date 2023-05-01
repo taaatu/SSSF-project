@@ -1,4 +1,4 @@
-import app from '../src/app';
+import app from '../src/App';
 import mongoose from 'mongoose';
 import randomstring from 'randomstring';
 import { UserTest } from '../src/interfaces/User';
@@ -17,6 +17,8 @@ import {
 import { Point } from 'geojson';
 import { RentDealTest } from '../src/interfaces/RentDeal';
 import { postRentDeal } from './rentDealDunctions';
+import { RatingTest } from '../src/interfaces/Rating';
+import { postRating, userDeleteRating } from './ratingFunctions';
 
 const uploadApp = process.env.UPLOAD_URL as string;
 
@@ -99,6 +101,20 @@ describe('Testing graphql api', () => {
       itemOwner: new mongoose.Types.ObjectId(testItem.owner.id),
     };
     await postRentDeal(app, rentDeal, userData.token!);
+  });
+
+  let ratingId: string;
+  it('should add a rating', async () => {
+    const testRating: RatingTest = {
+      item: new mongoose.Types.ObjectId(itemId),
+      value: 4,
+    };
+    const res = await postRating(app, testRating, userData.token!);
+    ratingId = res.id!;
+  });
+
+  it('should delete rating', async () => {
+    await userDeleteRating(app, ratingId, userData.token!);
   });
 
   it('should delete an item', async () => {

@@ -5,11 +5,18 @@ import { UserIdWithToken } from '../../interfaces/User';
 import itemModel from '../models/itemModel';
 import { RentDeal } from '../../interfaces/RentDeal';
 import rentDealModel from '../models/rentDealModel';
+import { Rating } from '../../interfaces/Rating';
+import ratingModel from '../models/ratingModel';
 
 export default {
   RentDeal: {
     item: async (parent: RentDeal) => {
       return await rentDealModel.findById(parent.item);
+    },
+  },
+  Rating: {
+    item: async (parent: Rating) => {
+      return await ratingModel.findById(parent.item);
     },
   },
   Query: {
