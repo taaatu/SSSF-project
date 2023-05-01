@@ -1,9 +1,9 @@
-import { Document } from 'mongoose';
 interface User {
   id: string;
   user_name: string;
   email: string;
   password: string;
+  role?: string;
 }
 
 type RegisterInput = Omit<User, 'id'>;

@@ -1,6 +1,6 @@
 const createRentDealQuery = `
-mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!) {
-    createRentDeal(item: $item, start_date: $startDate, end_date: $endDate) {
+mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!, $itemOwner: ID!) {
+    createRentDeal(item: $item, start_date: $startDate, end_date: $endDate, item_owner: $itemOwner) {
       id
       start_date
       end_date
@@ -9,4 +9,12 @@ mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!) 
   }
 `;
 
-export { createRentDealQuery };
+const rentDealsSentQuery = `
+query {
+    rentDealsSent {
+      created_date
+    } 
+  }
+`;
+
+export { createRentDealQuery, rentDealsSentQuery };

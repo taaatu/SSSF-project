@@ -1,23 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useRentDeal from '../hooks/RentDealHooks';
 import { useParams } from 'react-router-dom';
 import { RentDealInput } from '../interfaces/RentDeal';
 import TopNavBar from '../components/TopNavBar';
+import { useItem } from '../hooks/ItemHooks';
+import mongoose from 'mongoose';
+import { Item } from '../interfaces/Item';
 
 function CreateRentDeal() {
   const { id } = useParams();
   const { createRentDeal } = useRentDeal();
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
+  const { getItemById } = useItem();
+  const [item, setItem] = useState<Item>();
+  const getItem = async () => {
+    if (id === undefined) {
+      return;
+    }
+    setItem(await getItemById(id));
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (id === undefined) {
       return;
     }
+    if (item === undefined) return;
     const rentDeal: RentDealInput = {
       item: id,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
+      itemOwner: new mongoose.Types.ObjectId(item.owner.id),
     };
     const res = await createRentDeal(rentDeal);
     if (res) {
@@ -27,6 +40,9 @@ function CreateRentDeal() {
     alert('Rent deal creation failed');
     console.log('res', res);
   };
+  useEffect(() => {
+    getItem();
+  }, []);
   return (
     <div>
       <TopNavBar />

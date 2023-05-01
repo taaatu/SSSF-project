@@ -22,7 +22,7 @@ function ItemList() {
   }, []);
 
   return (
-    <div>
+    <div id="item-list">
       {items.map((item) => (
         <ItemCard key={item.id} item={item} />
       ))}

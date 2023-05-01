@@ -6,12 +6,15 @@ import { deleteItemQuery, itemByIdQuery } from '../graphql/queriesItem';
 import { Item } from '../interfaces/Item';
 import TopNavBar from '../components/TopNavBar';
 import ShowLocation from '../components/ShowLocation';
+import { Card } from 'react-bootstrap';
+import useUser from '../hooks/UserHook';
 
 function ItemPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState<Item>();
   const [showLocation, setShowLocation] = useState<boolean>(false);
+  const { currentUser } = useUser();
 
   const getItem = async () => {
     try {
@@ -31,28 +34,45 @@ function ItemPage() {
   return (
     <div>
       <TopNavBar />
-      <h1>ID: {id}</h1>
-      <img src={`${fileUrl}${item.filename}`}></img>
-      <p>{item.item_name}</p>
-      <p>{item.description}</p>
-      <p>owner: {item.owner.user_name}</p>
-      <div>
-        owner:{' '}
-        <Link to={`/profile/${item.owner.user_name}`}>
-          {item.owner.user_name}
-        </Link>
-      </div>
-      <button onClick={() => setShowLocation(true)}>Show location</button>
-      {showLocation && (
-        <ShowLocation
-          setIsMapOpen={setShowLocation}
-          coordinates={item.location.coordinates}
-        />
-      )}
-      <p>category: {item.category.category_name}</p>
-      {id !== undefined && <DeleteButton itemId={id} />}
-      <button onClick={() => navigate(`/item/modify/${id}`)}>Modify</button>
-      <button onClick={() => navigate(`/item/rent/${id}`)}>Ask for rent</button>
+      <p>Owner id: {item.owner.id}</p>
+      <p>User id: {currentUser?.id || ''}</p>
+      <p>Role: {currentUser?.role}</p>
+      <Card id="single-item">
+        {/* <h1>ID: {id}</h1> */}
+        <Card.Img id="item-img" src={`${fileUrl}${item.filename}`} />
+        <Card.Body>
+          <h2>{item.item_name}</h2>
+          <p>{item.description}</p>
+          <div>
+            owner:{' '}
+            <Link to={`/profile/${item.owner.user_name}`}>
+              {item.owner.user_name}
+            </Link>
+          </div>
+          <button onClick={() => setShowLocation(true)}>Show location</button>
+          {showLocation && (
+            <ShowLocation
+              setIsMapOpen={setShowLocation}
+              coordinates={item.location.coordinates}
+            />
+          )}
+          <p>category: {item.category.category_name}</p>
+          {id !== undefined &&
+            (currentUser?.role === 'admin' ||
+              item.owner.id === currentUser?.id) && (
+              <>
+                <DeleteButton itemId={id} />
+                <button onClick={() => navigate(`/item/modify/${id}`)}>
+                  Modify
+                </button>
+              </>
+            )}
+
+          <button onClick={() => navigate(`/item/rent/${id}`)}>
+            Ask for rent
+          </button>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

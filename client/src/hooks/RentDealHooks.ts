@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
-import { createRentDealQuery } from '../graphql/queriesRentDeal';
-import { RentDealInput } from '../interfaces/RentDeal';
+import {
+  createRentDealQuery,
+  rentDealsSentQuery,
+} from '../graphql/queriesRentDeal';
+import { RentDeal, RentDealInput } from '../interfaces/RentDeal';
 import { graphqlUrl } from '../utils/url';
 
 const useRentDeal = () => {
   const token = localStorage.getItem('token');
+  const [rentDealsSent, setRentDealsSent] = useState<RentDeal[]>();
   const createRentDeal = async (rentDeal: RentDealInput) => {
     try {
       if (!token) {
@@ -22,7 +27,26 @@ const useRentDeal = () => {
       console.error('create rent deal', error);
     }
   };
-  return { createRentDeal };
+  const getRentDealsSent = async () => {
+    try {
+      if (!token) {
+        return;
+      }
+      const res = await doGraphQLFetch(
+        graphqlUrl,
+        rentDealsSentQuery,
+        {},
+        token
+      );
+      setRentDealsSent(res.rentDealsSent);
+    } catch (error) {
+      console.error('getRentDealsSent', error);
+    }
+  };
+  useEffect(() => {
+    getRentDealsSent();
+  }, []);
+  return { createRentDeal, rentDealsSent };
 };
 
 export default useRentDeal;

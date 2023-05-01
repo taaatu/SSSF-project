@@ -7,7 +7,7 @@ interface Item extends Document {
   item_name: string;
   created_date: Date;
   description: string;
-  owner: Pick<User, 'user_name'>;
+  owner: Pick<User, 'user_name' | 'id'>;
   category: Category;
   location: Point;
   filename: string;

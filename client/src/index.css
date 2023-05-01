@@ -104,3 +104,41 @@ button:focus-visible {
   font-family: inherit;
   transition: border-color 0.25s;
 }
+
+.card-img {
+  /* max-width: auto;
+  max-height: 50%; */
+  /* height: 50%;
+  width: auto; */
+}
+
+#item-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  gap: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.item-card {
+  width: 18rem;
+  height: 500px;
+}
+
+#item-img {
+  width: 400px;
+  height: auto;
+}
+
+.card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#single-item { 
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 20px;
+}

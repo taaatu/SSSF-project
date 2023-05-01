@@ -13,6 +13,7 @@ interface RentDealInput {
   item: string;
   startDate: Date;
   endDate: Date;
+  itemOwner: Types.ObjectId;
 }
 
 export type { RentDeal, RentDealInput };

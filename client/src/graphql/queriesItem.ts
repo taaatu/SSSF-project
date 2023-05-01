@@ -49,6 +49,7 @@ query ($id: ID!) {
     description
     owner {
       user_name
+      id
     }
     category {
       category_name

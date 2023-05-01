@@ -5,7 +5,7 @@ export const uploadFile = async (
 ): Promise<UploadMessageResponse> => {
   const formData = new FormData();
   formData.append('item', file);
-  const res = await fetch('http://localhost:3002/api/v1/upload', {
+  const res = await fetch('http://localhost:3000/api/upload/upload', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
