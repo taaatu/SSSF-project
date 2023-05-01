@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node graphql/src/index.ts",
     "dev": "nodemon graphql/src/index.ts",
     "auth": "nodemon auth/index.ts",
     "upload": "nodemon upload/src/index.ts",
