@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -22,7 +22,7 @@ import CreateRentDeal from './pages/CreateRentDeal';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path={loginPath} element={<Login />} />
@@ -34,7 +34,7 @@ function App() {
         <Route path={profilePath} element={<Profile />} />
         <Route path={createRentDealPath} element={<CreateRentDeal />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -8,9 +8,10 @@ import TopNavBar from '../components/TopNavBar';
 import ShowLocation from '../components/ShowLocation';
 import { Card } from 'react-bootstrap';
 import useUser from '../hooks/UserHook';
-import ReactStars from 'react-rating-stars-component';
+// import ReactStars from 'react-rating-stars-component';
 import { useReviews } from '../hooks/ReviewHooks';
 import ItemReviews from '../components/ItemReview';
+import StarRating from '../components/StarRating';
 
 function ItemPage() {
   const { id } = useParams();
@@ -106,7 +107,8 @@ const ShowReviews = ({ itemId }: { itemId: string }) => {
     <div>
       Review: {review}
       {review !== undefined && (
-        <ReactStars isHalf={true} edit={false} value={review} size={24} />
+        // <ReactStars isHalf={true} edit={false} value={review} size={24} />
+        <StarRating edit={false} value={review} />
       )}
       {count} Reviews
     </div>

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Review } from '../interfaces/Review';
 import { useReviews } from '../hooks/ReviewHooks';
 import Card from 'react-bootstrap/Card';
-import ReactStars from 'react-rating-stars-component';
+// import ReactStars from 'react-rating-stars-component';
 import AddReview from './AddReview';
+import StarRating from './StarRating';
 
 function ItemReviews({ itemId }: { itemId: string }) {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -30,12 +31,13 @@ function ItemReviews({ itemId }: { itemId: string }) {
       <div id="reviews-list">
         {reviews.map((review) => (
           <Card>
-            <ReactStars
+            {/* <ReactStars
               isHalf={true}
               edit={false}
               value={review.value}
               size={24}
-            />
+            /> */}
+            <StarRating value={review.value} edit={false} />
             <h4>{review.user.user_name}</h4>
             {review.text}
           </Card>

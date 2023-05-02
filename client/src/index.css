@@ -154,3 +154,26 @@ button:focus-visible {
   display: flex;
   flex-direction: row;
 }
+
+.star-rating button {
+  background-color: transparent;
+  font-size: 50px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+}
+.on {
+  color: rgb(255, 215, 0);
+}
+.off {
+  color: gray;
+}
+
+.edit {
+  cursor: pointer;
+}
+
+button .star-rating  .no-edit {
+  cursor: default;
+}

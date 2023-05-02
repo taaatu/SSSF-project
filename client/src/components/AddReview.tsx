@@ -1,17 +1,26 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import ReactStars from 'react-rating-stars-component';
-import { useState } from 'react';
+// import ReactStars from 'react-rating-stars-component';
+import { useEffect, useState } from 'react';
 import { useReviews } from '../hooks/ReviewHooks';
-import { ReviewInput } from '../interfaces/Review';
+import { Review, ReviewInput } from '../interfaces/Review';
+import StarRating from './StarRating';
 
 function AddReview({ itemId }: { itemId: string }) {
   const [text, setText] = useState<string>('');
   const [review, setReview] = useState<number>();
-  const { addReview } = useReviews();
+  const [oldReview, setOldReview] = useState<Review>();
+  const { addReview, getReviewByUser } = useReviews();
 
-  const reviewChanged = (newReview: number) => {
-    setReview(newReview);
+  //   const reviewChanged = (newReview: number) => {
+  //     setReview(newReview);
+  //   };
+
+  const getOldReview = async () => {
+    const res = await getReviewByUser(itemId);
+    if (res === undefined) return;
+    console.log('getOldReview', res);
+    setOldReview(res);
   };
 
   const handleClick = async () => {
@@ -26,14 +35,35 @@ function AddReview({ itemId }: { itemId: string }) {
     alert('Review added');
   };
 
+  useEffect(() => {
+    getOldReview();
+  }, []);
+
   if (itemId === undefined) return <></>;
 
   return (
     <Card>
-      <h4>Submit review</h4>
-      <ReactStars size={50} onChange={reviewChanged} />
-      <textarea onChange={(e) => setText(e.target.value)}></textarea>
-      <Button onClick={handleClick}>Submit</Button>
+      {oldReview == undefined ? (
+        <>
+          <h4>Submit review</h4>
+          <div>r: {review}</div>
+          <StarRating size={50} setRating={setReview} />
+          {/* <ReactStars size={50} onChange={reviewChanged} /> */}
+          <textarea onChange={(e) => setText(e.target.value)}></textarea>
+          <Button onClick={handleClick}>Submit</Button>
+        </>
+      ) : (
+        <>
+          <h4>Your review</h4>
+          {/* <ReactStars edit={false} value={oldReview.value} size={50} /> */}
+          <StarRating size={50} edit={false} value={oldReview.value} />
+          <p>{oldReview.text}</p>
+          <div className="flex-row" style={{ gap: 10 }}>
+            <Button>Edit</Button>
+            <Button variant="danger">Delete</Button>
+          </div>
+        </>
+      )}
     </Card>
   );
 }
