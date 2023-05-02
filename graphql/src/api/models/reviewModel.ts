@@ -1,10 +1,15 @@
 import mongoose from 'mongoose';
-import { Rating } from '../../interfaces/Rating';
+import { Review } from '../../interfaces/Review';
 
-const ratingSchema = new mongoose.Schema<Rating>({
+const reviewSchema = new mongoose.Schema<Review>({
   item: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Item',
+    required: true,
+  },
+  text: {
+    type: String,
+    maxlength: 300,
     required: true,
   },
   user: {
@@ -20,4 +25,4 @@ const ratingSchema = new mongoose.Schema<Rating>({
   },
 });
 
-export default mongoose.model<Rating>('Rating', ratingSchema);
+export default mongoose.model<Review>('Review', reviewSchema);

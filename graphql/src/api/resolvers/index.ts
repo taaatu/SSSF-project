@@ -1,6 +1,6 @@
 import categoryResolver from './categoryResolver';
 import itemResolver from './itemResolver';
-import ratingResolver from './ratingResolver';
+import ratingResolver from './reviewResolver';
 import rentDealResolver from './rentDealResolver';
 import userResolver from './userResolver';
 

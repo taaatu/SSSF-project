@@ -4,19 +4,17 @@ import { Item } from '../../interfaces/Item';
 import { UserIdWithToken } from '../../interfaces/User';
 import itemModel from '../models/itemModel';
 import { RentDeal } from '../../interfaces/RentDeal';
-import rentDealModel from '../models/rentDealModel';
-import { Rating } from '../../interfaces/Rating';
-import ratingModel from '../models/ratingModel';
+import { Review } from '../../interfaces/Review';
 
 export default {
   RentDeal: {
     item: async (parent: RentDeal) => {
-      return await rentDealModel.findById(parent.item);
+      return await itemModel.findById(parent.item);
     },
   },
-  Rating: {
-    item: async (parent: Rating) => {
-      return await ratingModel.findById(parent.item);
+  Review: {
+    item: async (parent: Review) => {
+      return await itemModel.findById(parent.item);
     },
   },
   Query: {

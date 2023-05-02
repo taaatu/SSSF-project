@@ -3,7 +3,7 @@ import { User, UserIdWithToken } from '../../interfaces/User';
 import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 import { Item } from '../../interfaces/Item';
 import { RentDeal } from '../../interfaces/RentDeal';
-import { Rating } from '../../interfaces/Rating';
+import { Review } from '../../interfaces/Review';
 import getUser from '../../utils/getUser';
 
 export default {
@@ -35,8 +35,8 @@ export default {
       return user;
     },
   },
-  Rating: {
-    item: async (parent: Rating) => {
+  Review: {
+    user: async (parent: Review) => {
       return await getUser(parent.user);
     },
   },

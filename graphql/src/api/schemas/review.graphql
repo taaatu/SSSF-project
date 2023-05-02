@@ -1,0 +1,19 @@
+type Review {
+  id: ID!
+  item: Item!
+  text: String!
+  user: User!
+  value: Int!
+}
+
+type Query {
+  reviews: [Review]
+  reviewsByItem(id: ID!): [Review]
+  reviewByUser(id: ID!): Review
+}
+
+type Mutation {
+  addReview(item: ID!, text: String!, value: Int!): Review
+  modifyReview(id: ID!, value: Int!): Review
+  deleteReview(id: ID!): Review
+}

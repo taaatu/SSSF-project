@@ -1,17 +1,19 @@
 import { Document, Types } from 'mongoose';
 import { User } from './User';
 
-interface Rating extends Document {
+interface Review extends Document {
   item: Types.ObjectId;
+  text: string;
   user: Types.ObjectId;
   value: number;
 }
 
-interface RatingTest {
+interface ReviewTest {
   id?: string;
   item?: Types.ObjectId;
+  text?: string;
   user?: string | User;
   value?: number;
 }
 
-export { Rating, RatingTest };
+export { Review, ReviewTest };
