@@ -10,7 +10,7 @@ function AddReview({ itemId }: { itemId: string }) {
   const [text, setText] = useState<string>('');
   const [review, setReview] = useState<number>();
   const [oldReview, setOldReview] = useState<Review>();
-  const { addReview, getReviewByUser } = useReviews();
+  const { addReview, getReviewByUser, deleteReview } = useReviews();
 
   //   const reviewChanged = (newReview: number) => {
   //     setReview(newReview);
@@ -33,6 +33,15 @@ function AddReview({ itemId }: { itemId: string }) {
     const res = await addReview(data);
     if (res === undefined) return alert('Failed to add review');
     alert('Review added');
+    window.location.reload();
+  };
+
+  const handleDelete = async () => {
+    if (oldReview === undefined) return alert('Failed to delete review');
+    const res = await deleteReview(oldReview.id);
+    if (res === undefined) return alert('Failed to delete review');
+    alert('Review deleted');
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -46,21 +55,27 @@ function AddReview({ itemId }: { itemId: string }) {
       {oldReview == undefined ? (
         <>
           <h4>Submit review</h4>
-          <div>r: {review}</div>
           <StarRating size={50} setRating={setReview} />
           {/* <ReactStars size={50} onChange={reviewChanged} /> */}
-          <textarea onChange={(e) => setText(e.target.value)}></textarea>
+          <textarea
+            style={{ resize: 'none' }}
+            onChange={(e) => setText(e.target.value)}
+          ></textarea>
           <Button onClick={handleClick}>Submit</Button>
         </>
       ) : (
         <>
           <h4>Your review</h4>
           {/* <ReactStars edit={false} value={oldReview.value} size={50} /> */}
+          <div style={{ display: 'none' }}>{oldReview.value}</div>
           <StarRating size={50} edit={false} value={oldReview.value} />
+
           <p>{oldReview.text}</p>
           <div className="flex-row" style={{ gap: 10 }}>
             <Button>Edit</Button>
-            <Button variant="danger">Delete</Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Delete
+            </Button>
           </div>
         </>
       )}

@@ -33,4 +33,17 @@ mutation AddReview($item: ID!, $text: String!, $value: Int!) {
   }
 `;
 
-export { reviewsByItemQuery, reviewByUserQuery, addReviewQuery };
+const deleteReviewQuery = `
+mutation DeleteReview($id: ID!) {
+  deleteReview(id: $id) {
+    id
+  }
+}
+`;
+
+export {
+  reviewsByItemQuery,
+  reviewByUserQuery,
+  addReviewQuery,
+  deleteReviewQuery,
+};

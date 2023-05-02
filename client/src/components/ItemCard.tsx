@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ItemCardData } from '../interfaces/Item';
 import { fileUrl } from '../utils/url';
 import Card from 'react-bootstrap/Card';
+import ShowAvgReview from './ShowAvgReview';
 
 function ItemCard({ item }: { item: ItemCardData }) {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function ItemCard({ item }: { item: ItemCardData }) {
       onClick={handleClick}
     >
       {/* <div>{item.item_name}</div> */}
+      <ShowAvgReview itemId={item.id} partial={true} />
       <Card.Img
         variant="top"
         className="card-img"

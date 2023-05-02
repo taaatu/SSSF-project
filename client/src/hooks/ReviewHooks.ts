@@ -1,6 +1,7 @@
 import { doGraphQLFetch } from '../graphql/fetch';
 import {
   addReviewQuery,
+  deleteReviewQuery,
   reviewByUserQuery,
   reviewsByItemQuery,
 } from '../graphql/queriesReview';
@@ -48,7 +49,22 @@ const useReviews = () => {
       console.error('addReview', error);
     }
   };
-  return { getReviewsByItem, getReviewByUser, addReview };
+  const deleteReview = async (id: string) => {
+    try {
+      if (!token) return;
+      const res = await doGraphQLFetch(
+        graphqlUrl,
+        deleteReviewQuery,
+        { id: id },
+        token
+      );
+      console.log('deleteReview', res);
+      return res.deleteReview as Review;
+    } catch (error) {
+      throw new Error('deleteReview ' + error);
+    }
+  };
+  return { getReviewsByItem, getReviewByUser, addReview, deleteReview };
 };
 
 export { useReviews };

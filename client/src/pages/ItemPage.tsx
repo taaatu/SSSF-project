@@ -12,6 +12,7 @@ import useUser from '../hooks/UserHook';
 import { useReviews } from '../hooks/ReviewHooks';
 import ItemReviews from '../components/ItemReview';
 import StarRating from '../components/StarRating';
+import ShowAvgReview from '../components/ShowAvgReview';
 
 function ItemPage() {
   const { id } = useParams();
@@ -77,7 +78,8 @@ function ItemPage() {
               Ask for rent
             </button>
           </Card.Body>
-          <ShowReviews itemId={id} />
+          {/* <ShowReviews itemId={id} /> */}
+          <ShowAvgReview itemId={id} />
           {/* <AddReview itemId={id} /> */}
         </Card>
         <ItemReviews itemId={id} />
@@ -86,34 +88,37 @@ function ItemPage() {
   );
 }
 
-const ShowReviews = ({ itemId }: { itemId: string }) => {
-  const [review, setReview] = useState<number>();
-  const [count, setCount] = useState<number>(0);
-  const { getReviewsByItem } = useReviews();
-  const getReview = async () => {
-    const res = await getReviewsByItem(itemId);
-    if (!res || res.length === 0) {
-      setReview(0);
-      return;
-    }
-    const sum = res.reduce((a, b) => a + b.value, 0);
-    setReview(sum / res.length);
-    setCount(res.length);
-  };
-  useEffect(() => {
-    getReview();
-  }, []);
-  return (
-    <div>
-      Review: {review}
-      {review !== undefined && (
-        // <ReactStars isHalf={true} edit={false} value={review} size={24} />
-        <StarRating edit={false} value={review} />
-      )}
-      {count} Reviews
-    </div>
-  );
-};
+// const ShowReviews = ({ itemId }: { itemId: string }) => {
+//   const [review, setReview] = useState<number>();
+//   const [count, setCount] = useState<number>(0);
+//   const { getReviewsByItem } = useReviews();
+//   const getReview = async () => {
+//     const res = await getReviewsByItem(itemId);
+//     if (!res || res.length === 0) {
+//       setReview(0);
+//       return;
+//     }
+//     const sum = res.reduce((a, b) => a + b.value, 0);
+//     setReview(sum / res.length);
+//     setCount(res.length);
+//   };
+//   useEffect(() => {
+//     getReview();
+//   }, []);
+//   return (
+//     <Card.Footer>
+//       Review: {review}
+//       {review !== undefined && (
+//         <div className="flex-row">
+//           <StarRating edit={false} value={review} />
+//           {/* Review: {review} */}
+//         </div>
+//         // <ReactStars isHalf={true} edit={false} value={review} size={24} />
+//       )}
+//       {count} Reviews
+//     </Card.Footer>
+//   );
+// };
 
 // const AddReview = ({ itemId }: { itemId: string }) => {
 //   const [review, setReview] = useState<number>();
