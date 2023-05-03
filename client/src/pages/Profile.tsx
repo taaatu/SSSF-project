@@ -22,7 +22,6 @@ function Profile() {
   };
   return (
     <div>
-      <TopNavBar />
       <h1>Profile page {username}</h1>
       {currentUser !== undefined && currentUser.user_name === username && (
         <>

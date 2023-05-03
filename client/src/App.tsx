@@ -19,10 +19,12 @@ import ItemPage from './pages/ItemPage';
 import ModifyItem from './pages/ModifyItem';
 import Profile from './pages/Profile';
 import CreateRentDeal from './pages/CreateRentDeal';
+import TopNavBar from './components/TopNavBar';
 
 function App() {
   return (
     <HashRouter>
+      <TopNavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path={loginPath} element={<Login />} />

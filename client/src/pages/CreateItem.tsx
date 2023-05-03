@@ -79,7 +79,6 @@ function CreateItem() {
   };
   return (
     <div>
-      <TopNavBar />
       <div style={{ padding: '2em' }}>
         <h1>Create an item</h1>
         <Form className="item-form" onSubmit={handleSubmit}>

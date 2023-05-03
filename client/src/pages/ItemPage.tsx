@@ -38,7 +38,6 @@ function ItemPage() {
   }
   return (
     <div>
-      <TopNavBar />
       {/* <p>Owner id: {item.owner.id}</p>
       <p>User id: {currentUser?.id || ''}</p>
       <p>Role: {currentUser?.role}</p> */}

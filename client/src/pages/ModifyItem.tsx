@@ -86,7 +86,6 @@ function ModifyItem() {
   }, []);
   return (
     <div>
-      <TopNavBar />
       <div style={{ padding: '2em' }}>
         <h1>Modify item</h1>
         <Form className="item-form" onSubmit={handleSubmit}>

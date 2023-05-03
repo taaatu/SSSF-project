@@ -45,7 +45,6 @@ function CreateRentDeal() {
   }, []);
   return (
     <div>
-      <TopNavBar />
       <h1>Create Rent Deal</h1>
       <form onSubmit={handleSubmit}>
         <label>

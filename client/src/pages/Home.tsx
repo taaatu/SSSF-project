@@ -5,7 +5,6 @@ import '../styles.css';
 function Home() {
   return (
     <div>
-      <TopNavBar />
       <h1>Home page</h1>
       <ItemList />
     </div>
