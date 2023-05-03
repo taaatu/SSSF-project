@@ -177,3 +177,18 @@ button:focus-visible {
 button .star-rating  .no-edit {
   cursor: default;
 }
+
+textarea {
+  resize: none;
+}
+
+.item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 700px;
+}
+
+.fit-content {
+  width: fit-content !important;
+}

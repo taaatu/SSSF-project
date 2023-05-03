@@ -57,6 +57,7 @@ export default {
         });
       }
       const userFromAuth = await response.json();
+      console.log('////checkToken', userFromAuth);
       return userFromAuth;
     },
   },

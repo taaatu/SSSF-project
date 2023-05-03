@@ -8,6 +8,10 @@ import { useEffect, useState } from 'react';
 import { getAllCategoriesQuery } from '../graphql/queriesCategory';
 import { Category } from '../interfaces/Category';
 import { uploadFile } from '../utils/uploadFile';
+import { Button, Form } from 'react-bootstrap';
+import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
+import { Point } from 'geojson';
+import AddLocationMap from '../components/AddLocationMap';
 
 function ModifyItem() {
   const { id } = useParams();
@@ -18,6 +22,8 @@ function ModifyItem() {
   const [category, setCategory] = useState<Category>();
   const [categories, setCategories] = useState<Category[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [mapIsOpen, setMapIsOpen] = useState<boolean>(false);
+  const [coordinates, setCoordinates] = useState<number[]>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +37,13 @@ function ModifyItem() {
       if (imageFile !== null) {
         const fileName = (await uploadFile(imageFile as File)).data.filename;
         itemData.filename = fileName;
+      }
+      if (coordinates !== undefined) {
+        const testLocation = {
+          type: 'Point',
+          coordinates: coordinates,
+        } as Point;
+        itemData.location = testLocation;
       }
       const res = await doGraphQLFetch(
         graphqlUrl,
@@ -63,6 +76,10 @@ function ModifyItem() {
     const res = await doGraphQLFetch(graphqlUrl, getAllCategoriesQuery, {});
     setCategories(res.categories);
   };
+  const openMap = (event: any) => {
+    event.preventDefault();
+    setMapIsOpen(true);
+  };
   useEffect(() => {
     getItem();
     getCategories();
@@ -70,53 +87,89 @@ function ModifyItem() {
   return (
     <div>
       <TopNavBar />
-      <form className="column" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Item name"
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
-        />
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label>
-          Choose a category:
-          <select
-            name="category"
-            onChange={(e) =>
-              setCategory(categories.find(({ id }) => id === e.target.value))
-            }
-          >
-            {categories.map((category) => (
-              <option
-                selected={
-                  category.category_name === item?.category.category_name
-                }
-                value={category.id}
-              >
-                {category.category_name}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div style={{ padding: '2em' }}>
+        <h1>Modify item</h1>
+        <Form className="item-form" onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Item name</Form.Label>
+            <Form.Control
+              type="text"
+              maxLength={titleMaxLength}
+              placeholder="Item name"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+          </Form.Group>
 
-        <label>
-          Choose an image:
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/png, image/jpeg"
-            onChange={(e) => setImageFile(e.target.files?.item(0) || null)}
-          ></input>
-        </label>
+          <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              maxLength={descriptionMaxLength}
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Category</Form.Label>
+            <Form.Select
+              name="category"
+              className="fit-content"
+              onChange={(e) =>
+                setCategory(categories.find(({ id }) => id === e.target.value))
+              }
+            >
+              {categories.map((category) => (
+                <option
+                  selected={
+                    category.category_name === item?.category.category_name
+                  }
+                  value={category.id}
+                >
+                  {category.category_name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-        {/* <button>Choose location</button> */}
-        <input type="submit" value="Submit" />
-      </form>
+          <Form.Group>
+            <Form.Label>Choose an image:</Form.Label>
+            <Form.Control
+              type="file"
+              id="image"
+              name="image"
+              accept="image/png, image/jpeg"
+              onChange={(e) => {
+                const file = (e.target as HTMLInputElement).files?.item(0);
+                setImageFile(file || null);
+              }}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>
+              Location: {coordinates ? 'selected' : 'not selected'}
+            </Form.Label>
+            <div>
+              <Button variant="secondary" onClick={openMap}>
+                Choose location
+              </Button>
+            </div>
+            {coordinates && <div>Selected</div>}
+
+            {mapIsOpen && (
+              <AddLocationMap
+                setCoordinates={setCoordinates}
+                setIsMapOpen={setMapIsOpen}
+                coordinates={coordinates}
+              />
+            )}
+          </Form.Group>
+
+          {/* <button>Choose location</button> */}
+          <Button type="submit">Submit</Button>
+        </Form>
+      </div>
     </div>
   );
 }

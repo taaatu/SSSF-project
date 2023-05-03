@@ -102,6 +102,14 @@ describe('Testing graphql api', () => {
     await userPutItem(app, newItem, itemId, userData.token!);
   });
 
+  it('admin should modify item', async () => {
+    const newItem: ItemTest = {
+      itemName: 'Modified Test Item ' + randomstring.generate(7),
+      description: 'This is a modified test item',
+    };
+    await userPutItem(app, newItem, itemId, userAdmin.token!);
+  });
+
   it('should create a rent deal', async () => {
     const rentDeal: RentDealTest = {
       item: new mongoose.Types.ObjectId(itemId),

@@ -8,6 +8,10 @@ import { Category } from '../interfaces/Category';
 import TopNavBar from '../components/TopNavBar';
 import { uploadFile } from '../utils/uploadFile';
 import AddLocationMap from '../components/AddLocationMap';
+import Form from 'react-bootstrap/Form';
+import { Button, Card, Col, Row } from 'react-bootstrap';
+import Stack from 'react-bootstrap/Stack';
+import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
 
 function CreateItem() {
   const [itemName, setItemName] = useState<string>('');
@@ -76,47 +80,81 @@ function CreateItem() {
   return (
     <div>
       <TopNavBar />
-      <h1>Create an item</h1>
-      <form className="column" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Item name"
-          onChange={(e) => setItemName(e.target.value)}
-        />
-        <textarea
-          placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label>
-          Choose a category:
-          <select name="category" onChange={(e) => setCategory(e.target.value)}>
-            {categories.map((category) => (
-              <option value={category.id}>{category.category_name}</option>
-            ))}
-          </select>
-        </label>
+      <div style={{ padding: '2em' }}>
+        <h1>Create an item</h1>
+        <Form className="item-form" onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Item name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Item name"
+              onChange={(e) => setItemName(e.target.value)}
+              maxLength={titleMaxLength}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              maxLength={descriptionMaxLength}
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </Form.Group>
 
-        <label>
-          Choose an image:
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/png, image/jpeg"
-            onChange={(e) => setImageFile(e.target.files?.item(0) || null)}
-          ></input>
-        </label>
+          <Form.Group>
+            <Form.Label>Category</Form.Label>
+            <Form.Select
+              name="category"
+              className="fit-content"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option>Select a category</option>
+              {categories.map((category) => (
+                <option value={category.id}>{category.category_name}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-        <button onClick={openMap}>Choose location</button>
-        {mapIsOpen && (
-          <AddLocationMap
-            setCoordinates={setCoordinates}
-            setIsMapOpen={setMapIsOpen}
-            coordinates={coordinates}
-          />
-        )}
-        <input type="submit" value="Create" />
-      </form>
+          <Form.Group>
+            <Form.Label>Choose an image:</Form.Label>
+            <Form.Control
+              as={'input'}
+              type="file"
+              id="image"
+              className="fit-content"
+              name="image"
+              accept="image/png, image/jpeg"
+              onChange={(e) => {
+                const file = (e.target as HTMLInputElement).files?.item(0);
+                setImageFile(file || null);
+              }}
+              // onChange={(e) => setImageFile(e.target.files?.item(0) || null)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>
+              Location: {coordinates ? 'selected' : 'not selected'}
+            </Form.Label>
+            <div>
+              <Button variant="secondary" onClick={openMap}>
+                Choose location
+              </Button>
+            </div>
+            {coordinates && <div>Selected</div>}
+
+            {mapIsOpen && (
+              <AddLocationMap
+                setCoordinates={setCoordinates}
+                setIsMapOpen={setMapIsOpen}
+                coordinates={coordinates}
+              />
+            )}
+          </Form.Group>
+
+          <Button type="submit">Create</Button>
+        </Form>
+      </div>
     </div>
   );
 }

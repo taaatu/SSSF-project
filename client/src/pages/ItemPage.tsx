@@ -63,6 +63,7 @@ function ItemPage() {
               />
             )}
             <p>category: {item.category.category_name}</p>
+            <div>Role {currentUser?.role}</div>
             {id !== undefined &&
               (currentUser?.role === 'admin' ||
                 item.owner.id === currentUser?.id) && (

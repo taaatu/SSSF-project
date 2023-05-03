@@ -61,7 +61,9 @@ function AddReview({ itemId }: { itemId: string }) {
             style={{ resize: 'none' }}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
-          <Button onClick={handleClick}>Submit</Button>
+          <Button onClick={handleClick} style={{ marginTop: 10 }}>
+            Submit
+          </Button>
         </>
       ) : (
         <>

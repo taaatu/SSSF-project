@@ -20,6 +20,7 @@ query CheckToken {
         user_name
         id
         email
+        role
       }
     }
   }

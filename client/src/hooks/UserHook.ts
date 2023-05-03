@@ -21,6 +21,7 @@ const useUser = () => {
       if (!userData) {
         return;
       }
+      console.log('getCurrentUser', res.checkToken.user);
       setCurrentUser(res.checkToken.user);
     } catch (error) {
       console.error('getCurrentUser', error);
