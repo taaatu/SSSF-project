@@ -34,15 +34,15 @@ function ShowAvgReview({
         </div>
       ) : (
         <Card.Footer style={{ whiteSpace: 'nowrap' }}>
-          Review: {review}
+          <h5>Review: {review}</h5>
           {review !== undefined && (
             <div className="flex-row">
-              <StarRating edit={false} value={review} />
+              <StarRating edit={false} value={review} size={35} />
               {/* Review: {review} */}
             </div>
             // <ReactStars isHalf={true} edit={false} value={review} size={24} />
           )}
-          {count} Reviews
+          <h5>{count} Reviews</h5>
         </Card.Footer>
       )}
     </>

@@ -25,23 +25,25 @@ function ItemReviews({ itemId }: { itemId: string }) {
     getReviews();
   }, []);
   return (
-    <Card>
+    <Card style={{ gap: '1em' }}>
       <AddReview itemId={itemId} />
-      <h1>Reviews ({reviews.length})</h1>
-      <div id="reviews-list">
-        {reviews.map((review) => (
-          <Card>
-            {/* <ReactStars
+      <div>
+        <h1>Reviews ({reviews.length})</h1>
+        <div id="reviews-list">
+          {reviews.map((review) => (
+            <Card>
+              {/* <ReactStars
               isHalf={true}
               edit={false}
               value={review.value}
               size={24}
             /> */}
-            <StarRating value={review.value} edit={false} />
-            <h4>{review.user.user_name}</h4>
-            {review.text}
-          </Card>
-        ))}
+              <StarRating value={review.value} edit={false} />
+              <h4>{review.user.user_name}</h4>
+              {review.text}
+            </Card>
+          ))}
+        </div>
       </div>
     </Card>
   );

@@ -5,6 +5,7 @@ import { loginPath } from '../utils/RouterPaths';
 import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
 import { useAuth } from '../hooks/AuthHooks';
 import { Credentials } from '../interfaces/Credentials';
+import { Button } from 'react-bootstrap';
 
 function Register() {
   const [username, setUsername] = useState<string>('');
@@ -62,7 +63,7 @@ function Register() {
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Register</button>
+        <Button type="submit">Register</Button>
         <Link className="nav-link" to={loginPath}>
           Login
         </Link>

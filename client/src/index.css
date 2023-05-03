@@ -128,7 +128,8 @@ button:focus-visible {
 }
 
 #item-img {
-  width: 400px;
+  max-width: 400px;
+  min-width: 250px;
   height: auto;
 }
 
@@ -154,6 +155,7 @@ button:focus-visible {
   display: flex;
   flex-direction: row;
 }
+
 
 .star-rating button {
   background-color: transparent;
@@ -191,4 +193,22 @@ textarea {
 
 .fit-content {
   width: fit-content !important;
+}
+
+#item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  max-width: 50%;
+  min-width: 300px;
+}
+
+#item-info {
+  flex-wrap: wrap;
+}
+
+#reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }

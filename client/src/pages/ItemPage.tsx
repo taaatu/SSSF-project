@@ -6,7 +6,7 @@ import { deleteItemQuery, itemByIdQuery } from '../graphql/queriesItem';
 import { Item } from '../interfaces/Item';
 import TopNavBar from '../components/TopNavBar';
 import ShowLocation from '../components/ShowLocation';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import useUser from '../hooks/UserHook';
 // import ReactStars from 'react-rating-stars-component';
 import { useReviews } from '../hooks/ReviewHooks';
@@ -43,9 +43,9 @@ function ItemPage() {
       <p>Role: {currentUser?.role}</p> */}
       <Card id="item-page">
         {/* <h1>ID: {id}</h1> */}
-        <Card className="flex-row">
+        <Card id="item-info" className="flex-row">
           <Card.Img id="item-img" src={`${fileUrl}${item.filename}`} />
-          <Card.Body>
+          <Card.Body id="item-body">
             <h2>{item.item_name}</h2>
             <p>{item.description}</p>
             <div>
@@ -53,30 +53,35 @@ function ItemPage() {
               <Link to={`/profile/${item.owner.user_name}`}>
                 {item.owner.user_name}
               </Link>
+              <div>category: {item.category.category_name}</div>
             </div>
-            <button onClick={() => setShowLocation(true)}>Show location</button>
+            <Button variant="secondary" onClick={() => setShowLocation(true)}>
+              Show location
+            </Button>
             {showLocation && (
               <ShowLocation
                 setIsMapOpen={setShowLocation}
                 coordinates={item.location.coordinates}
               />
             )}
-            <p>category: {item.category.category_name}</p>
-            <div>Role {currentUser?.role}</div>
-            {id !== undefined &&
-              (currentUser?.role === 'admin' ||
-                item.owner.id === currentUser?.id) && (
-                <>
-                  <DeleteButton itemId={id} />
-                  <button onClick={() => navigate(`/item/modify/${id}`)}>
-                    Modify
-                  </button>
-                </>
-              )}
 
-            <button onClick={() => navigate(`/item/rent/${id}`)}>
-              Ask for rent
-            </button>
+            <div className="flex-row" style={{ gap: '10px' }}>
+              {id !== undefined &&
+                (currentUser?.role === 'admin' ||
+                  item.owner.id === currentUser?.id) && (
+                  <>
+                    <DeleteButton itemId={id} />
+                    <Button onClick={() => navigate(`/item/modify/${id}`)}>
+                      Modify
+                    </Button>
+                  </>
+                )}
+              {item.owner.id !== currentUser?.id && (
+                <Button onClick={() => navigate(`/item/rent/${id}`)}>
+                  Ask for rent
+                </Button>
+              )}
+            </div>
           </Card.Body>
           {/* <ShowReviews itemId={id} /> */}
           <ShowAvgReview itemId={id} />
@@ -191,7 +196,11 @@ const DeleteButton = ({ itemId }: { itemId: string }) => {
       console.error('deleteItem', error);
     }
   };
-  return <button onClick={handleClick}>Delete</button>;
+  return (
+    <Button variant="danger" onClick={handleClick}>
+      Delete
+    </Button>
+  );
 };
 
 export default ItemPage;
