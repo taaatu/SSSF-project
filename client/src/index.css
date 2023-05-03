@@ -117,10 +117,10 @@ button:focus-visible {
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-between; */
-  gap: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
+  gap: 1em;
+  /* margin-left: 10px;
+  margin-right: 10px; */
+} */
 
 .item-card {
   width: 18rem;
@@ -156,6 +156,9 @@ button:focus-visible {
   flex-direction: row;
 }
 
+.star-rating {
+  white-space: nowrap;
+}
 
 .star-rating button {
   background-color: transparent;
@@ -211,4 +214,8 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 1em;
+}
+
+#home-page {
+  padding: 2em;
 }

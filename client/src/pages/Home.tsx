@@ -4,8 +4,8 @@ import '../styles.css';
 
 function Home() {
   return (
-    <div>
-      <h1>Home page</h1>
+    <div id="home-page">
+      <h1>Home</h1>
       <ItemList />
     </div>
   );

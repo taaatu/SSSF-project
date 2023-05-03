@@ -1,8 +1,7 @@
-import { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FiMenu } from 'react-icons/fi';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createPath, loginPath, logoutPath } from '../utils/RouterPaths';
-import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { MainContext } from '../context/MainContext';
 
 function TopNavBar() {
@@ -10,22 +9,21 @@ function TopNavBar() {
   const { isLoggedIn } = useContext(MainContext);
   return (
     <Navbar sticky="top" id="topnav-bar">
-      <Container>
-        <Navbar.Brand>RentIT</Navbar.Brand>
-        <Navbar.Collapse>
-          <Nav>
+      <Navbar.Brand>RentIT</Navbar.Brand>
+      <Navbar.Collapse>
+        <Nav>
+          <Nav.Link>
+            <div onClick={() => navigate('/')}>Home</div>
+          </Nav.Link>
+          {isLoggedIn ? (
+            <LoggedInNavs />
+          ) : (
             <Nav.Link>
-              <div onClick={() => navigate('/')}>Home</div>
+              <div onClick={() => navigate(loginPath)}>Login</div>
             </Nav.Link>
-            {isLoggedIn ? (
-              <LoggedInNavs />
-            ) : (
-              <Nav.Link>
-                <div onClick={() => navigate(loginPath)}>Login</div>
-              </Nav.Link>
-            )}
+          )}
 
-            {/* <Nav.Link>
+          {/* <Nav.Link>
               <div onClick={() => navigate(createPath)}>Create</div>
             </Nav.Link>
             <Nav.Link>
@@ -40,26 +38,25 @@ function TopNavBar() {
             <Nav.Link>
               <div onClick={() => navigate(logoutPath)}>Logout</div>
             </Nav.Link> */}
-          </Nav>
+        </Nav>
+      </Navbar.Collapse>
+      {isLoggedIn && (
+        <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Signed in as:{' '}
+            <a href="#login">{localStorage.getItem('username')}</a>
+          </Navbar.Text>
         </Navbar.Collapse>
-        {isLoggedIn && (
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Signed in as:{' '}
-              <a href="#login">{localStorage.getItem('username')}</a>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        )}
+      )}
 
-        {/* <MenuButton /> */}
-        {/* <div>Search</div> */}
-        {/* <ProfileMenuButton /> */}
-        {/* <NavDropdown title="Admin" id="basic-nav-dropdown">
+      {/* <MenuButton /> */}
+      {/* <div>Search</div> */}
+      {/* <ProfileMenuButton /> */}
+      {/* <NavDropdown title="Admin" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href="#action/3.1">Logout</NavDropdown.Item>
         </NavDropdown> */}
-      </Container>
     </Navbar>
   );
 }
