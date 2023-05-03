@@ -1,29 +1,35 @@
 import { useState } from 'react';
-import { doGraphQLFetch } from '../graphql/fetch';
-import { register } from '../graphql/queriesUser';
 import { RegisterInput } from '../interfaces/User';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginPath } from '../utils/RouterPaths';
 import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
+import { useAuth } from '../hooks/AuthHooks';
+import { Credentials } from '../interfaces/Credentials';
 
 function Register() {
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { register, login } = useAuth();
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const url = 'http://localhost:3000/graphql';
-      const user: RegisterInput = {
-        user_name: username,
-        email: email,
-        password: password,
-      };
-      const res = await doGraphQLFetch(url, register, { user });
-      console.log('submit', res);
-    } catch (error) {
-      console.error('login submit', error);
-    }
+    const userData: RegisterInput = {
+      user_name: username,
+      email: email,
+      password: password,
+    };
+    const res = await register(userData);
+    console.log('register handle', res);
+    if (res == undefined) return alert('Register failed');
+    alert('User created successfully');
+    const credentials: Credentials = {
+      username: email,
+      password: password,
+    };
+    const loginRes = await login(credentials);
+    if (!loginRes) return alert('Login failed');
+    navigate('/');
   };
 
   return (

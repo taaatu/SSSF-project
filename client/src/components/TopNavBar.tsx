@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiMenu } from 'react-icons/fi';
-import { createPath, logoutPath } from '../utils/RouterPaths';
+import { createPath, loginPath, logoutPath } from '../utils/RouterPaths';
 import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { MainContext } from '../context/MainContext';
 
 function TopNavBar() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(MainContext);
   return (
     <Navbar sticky="top" id="topnav-bar">
       <Container>
@@ -15,7 +17,15 @@ function TopNavBar() {
             <Nav.Link>
               <div onClick={() => navigate('/')}>Home</div>
             </Nav.Link>
-            <Nav.Link>
+            {isLoggedIn ? (
+              <LoggedInNavs />
+            ) : (
+              <Nav.Link>
+                <div onClick={() => navigate(loginPath)}>Login</div>
+              </Nav.Link>
+            )}
+
+            {/* <Nav.Link>
               <div onClick={() => navigate(createPath)}>Create</div>
             </Nav.Link>
             <Nav.Link>
@@ -29,15 +39,18 @@ function TopNavBar() {
             </Nav.Link>
             <Nav.Link>
               <div onClick={() => navigate(logoutPath)}>Logout</div>
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            Signed in as:{' '}
-            <a href="#login">{localStorage.getItem('username')}</a>
-          </Navbar.Text>
-        </Navbar.Collapse>
+        {isLoggedIn && (
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text>
+              Signed in as:{' '}
+              <a href="#login">{localStorage.getItem('username')}</a>
+            </Navbar.Text>
+          </Navbar.Collapse>
+        )}
+
         {/* <MenuButton /> */}
         {/* <div>Search</div> */}
         {/* <ProfileMenuButton /> */}
@@ -50,6 +63,29 @@ function TopNavBar() {
     </Navbar>
   );
 }
+
+const LoggedInNavs = () => {
+  const navigate = useNavigate();
+  return (
+    <>
+      <Nav.Link>
+        <div onClick={() => navigate(createPath)}>Create</div>
+      </Nav.Link>
+      <Nav.Link>
+        <div
+          onClick={() =>
+            navigate(`/profile/${localStorage.getItem('username')}`)
+          }
+        >
+          Profile
+        </div>
+      </Nav.Link>
+      <Nav.Link>
+        <div onClick={() => navigate(logoutPath)}>Logout</div>
+      </Nav.Link>
+    </>
+  );
+};
 
 // const MenuButton = () => {
 //   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

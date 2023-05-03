@@ -6,7 +6,7 @@ interface User {
   role?: string;
 }
 
-type RegisterInput = Omit<User, 'id'>;
+type RegisterInput = Omit<User, 'id' | 'role'>;
 
 type UserOutPut = Omit<User, 'password'>;
 

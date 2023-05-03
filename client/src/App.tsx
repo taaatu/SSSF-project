@@ -20,22 +20,25 @@ import ModifyItem from './pages/ModifyItem';
 import Profile from './pages/Profile';
 import CreateRentDeal from './pages/CreateRentDeal';
 import TopNavBar from './components/TopNavBar';
+import { MainProvider } from './context/MainContext';
 
 function App() {
   return (
     <HashRouter>
-      <TopNavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path={loginPath} element={<Login />} />
-        <Route path={registerPath} element={<Register />} />
-        <Route path={createPath} element={<CreateItem />} />
-        <Route path={logoutPath} element={<Logout />} />
-        <Route path={itemPath} element={<ItemPage />} />
-        <Route path={modifyItemPath} element={<ModifyItem />} />
-        <Route path={profilePath} element={<Profile />} />
-        <Route path={createRentDealPath} element={<CreateRentDeal />} />
-      </Routes>
+      <MainProvider>
+        <TopNavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path={loginPath} element={<Login />} />
+          <Route path={registerPath} element={<Register />} />
+          <Route path={createPath} element={<CreateItem />} />
+          <Route path={logoutPath} element={<Logout />} />
+          <Route path={itemPath} element={<ItemPage />} />
+          <Route path={modifyItemPath} element={<ModifyItem />} />
+          <Route path={profilePath} element={<Profile />} />
+          <Route path={createRentDealPath} element={<CreateRentDeal />} />
+        </Routes>
+      </MainProvider>
     </HashRouter>
   );
 }

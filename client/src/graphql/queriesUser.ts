@@ -1,4 +1,4 @@
-const login = `
+const loginQuery = `
 mutation Login($credentials: Credentials!) {
     login(credentials: $credentials) {
       message
@@ -26,7 +26,7 @@ query CheckToken {
   }
 `;
 
-const register = `
+const registerQuery = `
 mutation Mutation($user: UserInput!) {
     register(user: $user) {
       message
@@ -52,4 +52,4 @@ const deleteCurrentUserQuery = `
   }
   `;
 
-export { login, checkTokenQuery, register, deleteCurrentUserQuery };
+export { loginQuery, checkTokenQuery, registerQuery, deleteCurrentUserQuery };
