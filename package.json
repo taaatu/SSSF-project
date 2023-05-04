@@ -2,9 +2,9 @@
   "name": "sssf-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "graphql/src/index.ts",
   "scripts": {
-    "start": "ts-node graphql/src/index.ts",
+    "start": "node graphql/src/index.js",
     "dev": "nodemon graphql/src/index.ts",
     "auth": "nodemon auth/index.ts",
     "upload": "nodemon upload/src/index.ts",
