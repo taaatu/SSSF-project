@@ -16,7 +16,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { shield } from 'graphql-shield';
 import { createRateLimitRule } from 'graphql-rate-limit';
 import authenticate from './functions/authenticate';
-// import uploadApi from '../../upload/src/uploadApi';
+import uploadApi from '../../upload/src/uploadApi';
 import morgan from 'morgan';
 
 const app = express();
@@ -32,7 +32,7 @@ app.use(
 app.use(cors<cors.CorsRequest>());
 app.use(express.json());
 
-// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 (async () => {
   try {
@@ -71,7 +71,7 @@ app.use(express.json());
       })
     );
 
-    // app.use('/api/upload', uploadApi);
+    app.use('/api/upload', uploadApi);
 
     // app.use(notFound);
     // app.use(errorHandler);

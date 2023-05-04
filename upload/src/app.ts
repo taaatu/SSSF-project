@@ -19,7 +19,7 @@ app.use(
 app.use(cors());
 app.use(express.json());
 
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 
 app.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
@@ -27,7 +27,7 @@ app.get<{}, MessageResponse>('/', (req, res) => {
   });
 });
 
-app.use('/api/v1', api);
+// app.use('/api/v1', api);
 
 app.use(notFound);
 app.use(errorHandler);
