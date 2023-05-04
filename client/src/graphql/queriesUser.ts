@@ -17,9 +17,7 @@ query CheckToken {
     checkToken {
       message
       user {
-        user_name
         id
-        email
         role
       }
     }

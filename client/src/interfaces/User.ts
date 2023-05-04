@@ -3,7 +3,7 @@ interface User {
   user_name: string;
   email: string;
   password: string;
-  role?: string;
+  role?: 'user' | 'admin';
 }
 
 type RegisterInput = Omit<User, 'id' | 'role'>;

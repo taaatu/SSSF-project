@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
 import { checkTokenQuery } from '../graphql/queriesUser';
 import { Navigate } from 'react-router-dom';
+import { graphqlUrl } from '../utils/url';
 
 function CheckIfLoggedIn() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -13,9 +14,9 @@ function CheckIfLoggedIn() {
       return;
     }
     try {
-      const url = 'http://localhost:3000/graphql';
+      // const url = 'http://localhost:3000/graphql';
       const isTokenValid = await doGraphQLFetch(
-        url,
+        graphqlUrl,
         checkTokenQuery,
         {},
         token

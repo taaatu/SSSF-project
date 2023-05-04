@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { doGraphQLFetch } from '../graphql/fetch';
-import { createItem } from '../graphql/queriesItem';
+import { createItemQuery } from '../graphql/queriesItem';
 import { Point } from 'geojson';
 import { ItemInput } from '../interfaces/Item';
 import { getAllCategoriesQuery } from '../graphql/queriesCategory';
@@ -12,6 +12,8 @@ import Form from 'react-bootstrap/Form';
 import { Button, Card, Col, Row } from 'react-bootstrap';
 import Stack from 'react-bootstrap/Stack';
 import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
+import { useItem } from '../hooks/ItemHooks';
+import { useNavigate } from 'react-router-dom';
 
 function CreateItem() {
   const [itemName, setItemName] = useState<string>('');
@@ -21,6 +23,8 @@ function CreateItem() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mapIsOpen, setMapIsOpen] = useState<boolean>(false);
   const [coordinates, setCoordinates] = useState<number[]>();
+  const { createItem } = useItem();
+  const navigate = useNavigate();
 
   const getCategories = async () => {
     const res = await doGraphQLFetch(
@@ -43,39 +47,37 @@ function CreateItem() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const url = 'http://localhost:3000/graphql';
-      if (coordinates === undefined) {
-        alert('Location has not been set');
-        return;
-      }
-      const testLocation = {
-        type: 'Point',
-        coordinates: coordinates,
-      } as Point;
-      if (imageFile === null) {
-        alert('no image');
-        return;
-      }
-      const fileName = (await uploadFile(imageFile as File)).data.filename;
-      console.log('filename', fileName);
-      const itemData: ItemInput = {
-        itemName: itemName,
-        description: description,
-        category: category,
-        filename: fileName,
-        location: testLocation,
-      };
-      const res = await doGraphQLFetch(
-        url,
-        createItem,
-        itemData,
-        localStorage.getItem('token') || undefined
-      );
-      console.log('submit item', res);
-    } catch (error) {
-      console.error('item submit', error);
+    if (coordinates === undefined) {
+      alert('Location has not been set');
+      return;
     }
+    const itemLocation = {
+      type: 'Point',
+      coordinates: coordinates,
+    } as Point;
+    if (imageFile === null) {
+      alert('no image');
+      return;
+    }
+    const fileName = (await uploadFile(imageFile as File)).data.filename;
+    const itemData: ItemInput = {
+      itemName: itemName,
+      description: description,
+      category: category,
+      filename: fileName,
+      location: itemLocation,
+    };
+    // const res = await doGraphQLFetch(
+    //   url,
+    //   createItemQuery,
+    //   itemData,
+    //   localStorage.getItem('token') || undefined
+    // );
+    const res = await createItem(itemData);
+    console.log('submit item', res);
+    if (!res) return alert('Failed to create the item');
+    alert('Item created');
+    navigate('/');
   };
   return (
     <div>

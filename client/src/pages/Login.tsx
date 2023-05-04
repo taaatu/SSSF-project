@@ -1,14 +1,10 @@
-import { useContext, useState } from 'react';
-import { doGraphQLFetch } from '../graphql/fetch';
-import { loginQuery } from '../graphql/queriesUser';
+import { useState } from 'react';
 import { Credentials } from '../interfaces/Credentials';
-import LoginMessageResponse from '../interfaces/LoginMessageResponse';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerPath } from '../utils/RouterPaths';
 import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../hooks/AuthHooks';
-import { MainContext } from '../context/MainContext';
 
 function Login() {
   const [username, setUsername] = useState<string>('');

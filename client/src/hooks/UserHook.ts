@@ -5,11 +5,11 @@ import {
   deleteCurrentUserQuery,
 } from '../graphql/queriesUser';
 import { graphqlUrl } from '../utils/url';
-import { UserOutPut } from '../interfaces/User';
+import { User, UserOutPut } from '../interfaces/User';
 
 const useUser = () => {
   const token = localStorage.getItem('token');
-  const [currentUser, setCurrentUser] = useState<UserOutPut>();
+  const [currentUser, setCurrentUser] = useState<Pick<User, 'id' | 'role'>>();
 
   const getCurrentUser = async () => {
     try {
@@ -17,14 +17,15 @@ const useUser = () => {
         return;
       }
       const res = await doGraphQLFetch(graphqlUrl, checkTokenQuery, {}, token);
+      console.log('checkToken', res);
       const userData = res.checkToken.user;
       if (!userData) {
         return;
       }
-      console.log('getCurrentUser', res.checkToken.user);
+      console.log('get currentUser', res.checkToken.user);
       setCurrentUser(res.checkToken.user);
     } catch (error) {
-      console.error('getCurrentUser', error);
+      console.error('get currentUser', error);
     }
   };
   const deleteCurrentUser = async () => {
