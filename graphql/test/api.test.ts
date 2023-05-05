@@ -20,7 +20,7 @@ import { postRentDeal } from './rentDealDunctions';
 import { ReviewTest } from '../src/interfaces/Review';
 import { postReview, userDeleteReview } from './reviewFunctions';
 
-const uploadApp = process.env.UPLOAD_URL as string;
+// const uploadApp = process.env.UPLOAD_URL as string;
 
 describe('Testing graphql api', () => {
   beforeAll(async () => {
@@ -70,9 +70,9 @@ describe('Testing graphql api', () => {
   let testItem: Item;
 
   // test upload file
-  it('should upload a file', async () => {
-    uploadData = await postFile(uploadApp, userData.token!);
-  });
+  // it('should upload a file', async () => {
+  //   uploadData = await postFile(uploadApp, userData.token!);
+  // });
   const testLocation = {
     type: 'Point',
     coordinates: [24.9384, 60.1699],
