@@ -19,6 +19,8 @@ interface UserOutPut {
   role?: 'user' | 'admin';
 }
 
+type UserNameId = Pick<UserOutPut, 'user_name' | 'id'>;
+
 interface UserTest {
   id?: string;
   user_name?: string; // returned from graphql is snake_case
@@ -34,4 +36,4 @@ interface UserIdWithToken {
   role: 'user' | 'admin';
 }
 
-export { User, UserTest, UserIdWithToken, UserOutPut };
+export { User, UserTest, UserIdWithToken, UserOutPut, UserNameId };

@@ -1,7 +1,12 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { GraphQLError } from 'graphql';
-import { User, UserIdWithToken, UserOutPut } from '../../interfaces/User';
+import {
+  User,
+  UserIdWithToken,
+  UserNameId,
+  UserOutPut,
+} from '../../interfaces/User';
 import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 import { Item } from '../../interfaces/Item';
 import { RentDeal } from '../../interfaces/RentDeal';
@@ -44,6 +49,17 @@ export default {
     },
   },
   Query: {
+    userByUsername: async (_parent: unknown, args: { username: string }) => {
+      const user = (await userModel.findOne({
+        user_name: args.username,
+      })) as UserNameId;
+      if (!user) {
+        throw new GraphQLError('User not found', {
+          extensions: { code: 'NOT_FOUND' },
+        });
+      }
+      return user;
+    },
     checkToken: async (
       _parent: unknown,
       _args: unknown,

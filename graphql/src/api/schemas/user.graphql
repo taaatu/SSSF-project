@@ -30,7 +30,7 @@ input UserModify {
 
 type Query {
   users: [User]
-  userById(id: ID!): User
+  userByUsername(username: String!): User
   checkToken: TokenMessage
 }
 

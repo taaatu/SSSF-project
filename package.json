@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/src/index.js",
     "dev": "nodemon graphql/src/index.ts",
+    "build": "tsc",
     "copyGraphql": "copyfiles --error graphql/src/api/schemas/*.graphql dist",
     "postbuild": "npm run copyGraphql",
     "lint": "eslint --fix graphql/src graphql/test",
