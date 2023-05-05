@@ -15,7 +15,6 @@ const useReviews = () => {
       const res = await doGraphQLFetch(graphqlUrl, reviewsByItemQuery, {
         id: id,
       });
-      console.log('getReviewsByItem', res.reviewsByItem);
       return res.reviewsByItem as Review[];
     } catch (error) {
       console.error('getReviewsByItem', error);
@@ -32,7 +31,6 @@ const useReviews = () => {
         },
         token
       );
-      console.log('getReviewByUser', res);
       return res.reviewByUser as Review;
     } catch (error) {
       console.error('getReviewByUser', error);
@@ -40,10 +38,8 @@ const useReviews = () => {
   };
   const addReview = async (data: ReviewInput) => {
     try {
-      console.log('addReview data', data);
       if (!token) return console.error('no token');
       const res = await doGraphQLFetch(graphqlUrl, addReviewQuery, data, token);
-      console.log('addReview', res);
       return res.addReview as Review;
     } catch (error) {
       console.error('addReview', error);
@@ -58,7 +54,6 @@ const useReviews = () => {
         { id: id },
         token
       );
-      console.log('deleteReview', res);
       return res.deleteReview as Review;
     } catch (error) {
       throw new Error('deleteReview ' + error);

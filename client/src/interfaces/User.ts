@@ -3,11 +3,13 @@ interface User {
   user_name: string;
   email: string;
   password: string;
-  role?: string;
+  role?: 'user' | 'admin';
 }
 
 type RegisterInput = Omit<User, 'id' | 'role'>;
 
 type UserOutPut = Omit<User, 'password'>;
 
-export type { User, UserOutPut, RegisterInput };
+type UserNameId = Pick<User, 'user_name' | 'id'>;
+
+export type { User, UserOutPut, RegisterInput, UserNameId };

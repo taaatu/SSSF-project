@@ -1,4 +1,4 @@
-import app from '../src/App';
+import app from '../src/app';
 import mongoose from 'mongoose';
 import randomstring from 'randomstring';
 import { UserTest } from '../src/interfaces/User';

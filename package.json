@@ -2,12 +2,13 @@
   "name": "sssf-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "graphql/src/index.ts",
   "scripts": {
-    "start": "ts-node graphql/src/index.ts",
+    "start": "node dist/src/index.js",
     "dev": "nodemon graphql/src/index.ts",
-    "auth": "nodemon auth/index.ts",
-    "upload": "nodemon upload/src/index.ts",
+    "copyGraphql": "copyfiles --error graphql/src/api/schemas/*.graphql dist",
+    "postbuild": "npm run copyGraphql",
+    "lint": "eslint --fix graphql/src graphql/test",
     "test": "jest --detectOpenHandles --forceExit"
   },
   "author": "Tatu Ihaksi",
@@ -39,7 +40,7 @@
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
     "randomstring": "^1.2.3",
-    "sharp": "^0.32.0",
+    "sharp": "^0.32.1",
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {
@@ -57,6 +58,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
@@ -69,6 +71,6 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

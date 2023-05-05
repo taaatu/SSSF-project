@@ -17,9 +17,7 @@ query CheckToken {
     checkToken {
       message
       user {
-        user_name
         id
-        email
         role
       }
     }
@@ -52,4 +50,19 @@ const deleteCurrentUserQuery = `
   }
   `;
 
-export { loginQuery, checkTokenQuery, registerQuery, deleteCurrentUserQuery };
+const getUserQuery = `
+query ExampleQuery($username: String!) {
+  userByUsername(username: $username) {
+    id
+    user_name
+  }
+}
+`;
+
+export {
+  loginQuery,
+  checkTokenQuery,
+  registerQuery,
+  deleteCurrentUserQuery,
+  getUserQuery,
+};

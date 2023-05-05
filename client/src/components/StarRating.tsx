@@ -1,6 +1,11 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
+// A component to display the rating as stars
 // https://dev.to/michaelburrows/create-a-custom-react-star-rating-component-5o6
+// props:
+//  value: the default rating to display
+//  size: the size of the stars
+//  edit: whether the user can edit the rating
 
 function StarRating({
   value = 0,
@@ -13,9 +18,9 @@ function StarRating({
   size?: number;
   setRating?: Dispatch<SetStateAction<number | undefined>>;
 }) {
-  //   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(value);
   const [selected, setSelected] = useState(0);
+
   return (
     <div className="star-rating">
       {[...Array(5)].map((_star, index) => {

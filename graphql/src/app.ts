@@ -16,7 +16,6 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { shield } from 'graphql-shield';
 import { createRateLimitRule } from 'graphql-rate-limit';
 import authenticate from './functions/authenticate';
-import api from '../../auth/api';
 import uploadApi from '../../upload/src/uploadApi';
 import morgan from 'morgan';
 
@@ -71,8 +70,6 @@ app.use('/uploads', express.static('uploads'));
         context: async ({ req }) => authenticate(req),
       })
     );
-
-    app.use('/api/v1', api);
 
     app.use('/api/upload', uploadApi);
 

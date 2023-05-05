@@ -1,4 +1,4 @@
-const createItem = `
+const createItemQuery = `
 mutation CreateItem($itemName: String!, $description: String!, $category: ID!, $filename: String!, $location: LocationInput) {
     createItem(item_name: $itemName, description: $description, category: $category, filename: $filename, location: $location) {
       id
@@ -73,7 +73,7 @@ mutation DeleteItem($id: ID!) {
 `;
 
 export {
-  createItem,
+  createItemQuery,
   itemsQuery,
   itemByIdQuery,
   deleteItemQuery,

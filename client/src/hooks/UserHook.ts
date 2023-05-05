@@ -5,11 +5,12 @@ import {
   deleteCurrentUserQuery,
 } from '../graphql/queriesUser';
 import { graphqlUrl } from '../utils/url';
-import { UserOutPut } from '../interfaces/User';
+import { User, UserNameId } from '../interfaces/User';
+import { getUserQuery } from '../graphql/queriesUser';
 
 const useUser = () => {
   const token = localStorage.getItem('token');
-  const [currentUser, setCurrentUser] = useState<UserOutPut>();
+  const [currentUser, setCurrentUser] = useState<Pick<User, 'id' | 'role'>>();
 
   const getCurrentUser = async () => {
     try {
@@ -21,10 +22,9 @@ const useUser = () => {
       if (!userData) {
         return;
       }
-      console.log('getCurrentUser', res.checkToken.user);
       setCurrentUser(res.checkToken.user);
     } catch (error) {
-      console.error('getCurrentUser', error);
+      console.error('get currentUser', error);
     }
   };
   const deleteCurrentUser = async () => {
@@ -38,16 +38,23 @@ const useUser = () => {
         {},
         token
       );
-      console.log('deleteCurrentUser', res.deleteUser);
       return res.deleteUser;
     } catch (error) {
       console.error('delete user', error);
     }
   };
+  const getUserById = async (username: string) => {
+    try {
+      const res = await doGraphQLFetch(graphqlUrl, getUserQuery, { username });
+      return res.userByUsername as UserNameId;
+    } catch (error) {
+      console.error('get user', error);
+    }
+  };
   useEffect(() => {
     getCurrentUser();
   }, []);
-  return { currentUser, deleteCurrentUser };
+  return { currentUser, deleteCurrentUser, getUserById };
 };
 
 export default useUser;

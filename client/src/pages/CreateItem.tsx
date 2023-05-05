@@ -1,40 +1,28 @@
-import { useEffect, useState } from 'react';
-import { doGraphQLFetch } from '../graphql/fetch';
-import { createItem } from '../graphql/queriesItem';
+import { useState } from 'react';
 import { Point } from 'geojson';
 import { ItemInput } from '../interfaces/Item';
-import { getAllCategoriesQuery } from '../graphql/queriesCategory';
-import { Category } from '../interfaces/Category';
-import TopNavBar from '../components/TopNavBar';
 import { uploadFile } from '../utils/uploadFile';
 import AddLocationMap from '../components/AddLocationMap';
 import Form from 'react-bootstrap/Form';
-import { Button, Card, Col, Row } from 'react-bootstrap';
-import Stack from 'react-bootstrap/Stack';
+import { Button } from 'react-bootstrap';
 import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
+import { useItem } from '../hooks/ItemHooks';
+import { useNavigate } from 'react-router-dom';
+import { useCategory } from '../hooks/CategoryHooks';
+
+// Page for creating a new item
 
 function CreateItem() {
   const [itemName, setItemName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [categories, setCategories] = useState<Category[]>([]);
   const [category, setCategory] = useState<string>('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mapIsOpen, setMapIsOpen] = useState<boolean>(false);
   const [coordinates, setCoordinates] = useState<number[]>();
 
-  const getCategories = async () => {
-    const res = await doGraphQLFetch(
-      'http://localhost:3000/graphql',
-      getAllCategoriesQuery,
-      {}
-    );
-    console.log('categories', res.categories);
-    setCategories(res.categories);
-  };
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+  const { categories } = useCategory();
+  const { createItem } = useItem();
+  const navigate = useNavigate();
 
   const openMap = (event: any) => {
     event.preventDefault();
@@ -43,40 +31,36 @@ function CreateItem() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const url = 'http://localhost:3000/graphql';
-      if (coordinates === undefined) {
-        alert('Location has not been set');
-        return;
-      }
-      const testLocation = {
-        type: 'Point',
-        coordinates: coordinates,
-      } as Point;
-      if (imageFile === null) {
-        alert('no image');
-        return;
-      }
-      const fileName = (await uploadFile(imageFile as File)).data.filename;
-      console.log('filename', fileName);
-      const itemData: ItemInput = {
-        itemName: itemName,
-        description: description,
-        category: category,
-        filename: fileName,
-        location: testLocation,
-      };
-      const res = await doGraphQLFetch(
-        url,
-        createItem,
-        itemData,
-        localStorage.getItem('token') || undefined
-      );
-      console.log('submit item', res);
-    } catch (error) {
-      console.error('item submit', error);
+    if (coordinates === undefined) {
+      alert('Location has not been set');
+      return;
     }
+
+    const itemLocation = {
+      type: 'Point',
+      coordinates: coordinates,
+    } as Point;
+
+    if (imageFile === null) {
+      alert('no image');
+      return;
+    }
+
+    const fileName = (await uploadFile(imageFile as File)).data.filename;
+    const itemData: ItemInput = {
+      itemName: itemName,
+      description: description,
+      category: category,
+      filename: fileName,
+      location: itemLocation,
+    };
+
+    const res = await createItem(itemData);
+    if (!res) return alert('Failed to create the item');
+    alert('Item created');
+    navigate('/');
   };
+
   return (
     <div>
       <div style={{ padding: '2em' }}>
@@ -89,6 +73,7 @@ function CreateItem() {
               placeholder="Item name"
               onChange={(e) => setItemName(e.target.value)}
               maxLength={titleMaxLength}
+              required
             />
           </Form.Group>
           <Form.Group>
@@ -96,6 +81,7 @@ function CreateItem() {
             <Form.Control
               as="textarea"
               maxLength={descriptionMaxLength}
+              required
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
             />
@@ -120,6 +106,7 @@ function CreateItem() {
             <Form.Control
               as={'input'}
               type="file"
+              required
               id="image"
               className="fit-content"
               name="image"
@@ -128,9 +115,9 @@ function CreateItem() {
                 const file = (e.target as HTMLInputElement).files?.item(0);
                 setImageFile(file || null);
               }}
-              // onChange={(e) => setImageFile(e.target.files?.item(0) || null)}
             />
           </Form.Group>
+
           <Form.Group>
             <Form.Label>
               Location: {coordinates ? 'selected' : 'not selected'}
@@ -140,7 +127,6 @@ function CreateItem() {
                 Choose location
               </Button>
             </div>
-            {coordinates && <div>Selected</div>}
 
             {mapIsOpen && (
               <AddLocationMap

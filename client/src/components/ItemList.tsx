@@ -4,21 +4,21 @@ import { itemsQuery } from '../graphql/queriesItem';
 import { graphqlUrl } from '../utils/url';
 import { ItemCardData } from '../interfaces/Item';
 import ItemCard from './ItemCard';
+import { useItem } from '../hooks/ItemHooks';
+
+// Component for displaying a list of items.
 
 function ItemList() {
+  const { getItems } = useItem();
   const [items, setItems] = useState<ItemCardData[]>([]);
-  const getItems = async () => {
-    try {
-      const res = await doGraphQLFetch(graphqlUrl, itemsQuery, {});
-      setItems(res.items as ItemCardData[]);
-      console.log('items res', items);
-    } catch (error) {
-      console.error('getItems', error);
-    }
+
+  const fetchItems = async () => {
+    const res = (await getItems()) as ItemCardData[];
+    setItems(res);
   };
 
   useEffect(() => {
-    getItems();
+    fetchItems();
   }, []);
 
   return (

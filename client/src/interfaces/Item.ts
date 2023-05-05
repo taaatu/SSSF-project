@@ -21,6 +21,8 @@ interface ItemInput {
   filename: string;
 }
 
+type ModifyItemInput = Partial<ItemInput> & { id: string | undefined };
+
 interface ItemCardData {
   id: string;
   item_name: string;
@@ -30,4 +32,4 @@ interface ItemCardData {
   filename: string;
 }
 
-export type { Item, ItemInput, ItemCardData };
+export type { Item, ItemInput, ItemCardData, ModifyItemInput };
