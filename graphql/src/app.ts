@@ -64,14 +64,13 @@ app.use('/uploads', express.static('uploads'));
       includeStacktraceInErrorResponses: false,
     });
     await server.start();
+    app.use('/api/upload', uploadApi);
     app.use(
       '/graphql',
       expressMiddleware(server, {
         context: async ({ req }) => authenticate(req),
       })
     );
-
-    app.use('/api/upload', uploadApi);
 
     // app.use(notFound);
     // app.use(errorHandler);
