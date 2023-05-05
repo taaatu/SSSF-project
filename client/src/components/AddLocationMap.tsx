@@ -10,6 +10,8 @@ import { LatLngTuple } from 'leaflet';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
+// Component for adding location to the map
+
 function AddLocationMap({
   setCoordinates,
   setIsMapOpen,
@@ -21,24 +23,23 @@ function AddLocationMap({
 }) {
   const [markers, setMarkers] = useState<LatLngTuple | undefined>(
     coordinates as LatLngTuple
-  ); // [
-  const SomeComponent = () => {
+  );
+  const SaveCoordinates = () => {
     useMapEvents({
       click: (e) => {
         const { lat, lng } = e.latlng;
         setMarkers([lat, lng]);
         setCoordinates([lat, lng]);
-        console.log('lat lng', lat, lng);
       },
     });
 
     return null;
   };
+
   const handleClose = () => setIsMapOpen(false);
+
   return (
     <div id="map-view">
-      {/* <h1>Map</h1>
-      <button onClick={handleClose}>Close map</button> */}
       <Modal show={true} onHide={handleClose} size="lg">
         <Modal.Header closeButton onHide={handleClose}>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -62,7 +63,7 @@ function AddLocationMap({
             </Marker>
           )}
 
-          <SomeComponent />
+          <SaveCoordinates />
         </MapContainer>
       </Modal>
     </div>

@@ -10,4 +10,6 @@ type RegisterInput = Omit<User, 'id' | 'role'>;
 
 type UserOutPut = Omit<User, 'password'>;
 
-export type { User, UserOutPut, RegisterInput };
+type UserNameId = Pick<User, 'user_name' | 'id'>;
+
+export type { User, UserOutPut, RegisterInput, UserNameId };

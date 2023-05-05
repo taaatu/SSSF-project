@@ -16,7 +16,6 @@ const useAuth = () => {
       });
       return res.register;
     } catch (error) {
-      //   throw new Error('register error' + error);
       console.error('register error', error);
     }
   };

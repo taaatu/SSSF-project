@@ -3,6 +3,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import Modal from 'react-bootstrap/Modal';
 
+// This component shows the item location on a map
+
 function ShowLocation({
   setIsMapOpen,
   coordinates,
@@ -11,9 +13,11 @@ function ShowLocation({
   coordinates: number[] | undefined;
 }) {
   const handleClose = () => setIsMapOpen(false);
+
   if (coordinates === undefined) {
     return <></>;
   }
+
   return (
     <div id="map-view">
       <Modal show={true} onHide={handleClose} size="lg">
@@ -32,7 +36,6 @@ function ShowLocation({
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
           </Marker>
-          {/* <SomeComponent /> */}
         </MapContainer>
       </Modal>
     </div>

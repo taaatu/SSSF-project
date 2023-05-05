@@ -21,7 +21,6 @@ const useRentDeal = () => {
         rentDeal,
         token
       );
-      console.log('createRentDeal', res);
       return res.createRentDeal;
     } catch (error) {
       console.error('create rent deal', error);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { RegisterInput } from '../interfaces/User';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginPath } from '../utils/RouterPaths';
@@ -6,6 +6,9 @@ import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
 import { useAuth } from '../hooks/AuthHooks';
 import { Credentials } from '../interfaces/Credentials';
 import { Button } from 'react-bootstrap';
+import { MainContext } from '../context/MainContext';
+
+// Page for registering a new user
 
 function Register() {
   const [username, setUsername] = useState<string>('');
@@ -13,6 +16,8 @@ function Register() {
   const [password, setPassword] = useState<string>('');
   const { register, login } = useAuth();
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(MainContext);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userData: RegisterInput = {
@@ -21,7 +26,6 @@ function Register() {
       password: password,
     };
     const res = await register(userData);
-    console.log('register handle', res);
     if (res == undefined) return alert('Register failed');
     alert('User created successfully');
     const credentials: Credentials = {
@@ -30,6 +34,7 @@ function Register() {
     };
     const loginRes = await login(credentials);
     if (!loginRes) return alert('Login failed');
+    setIsLoggedIn(true);
     navigate('/');
   };
 

@@ -1,6 +1,7 @@
 import ItemList from '../components/ItemList';
-import TopNavBar from '../components/TopNavBar';
 import '../styles.css';
+
+// App's home page which displays all the items
 
 function Home() {
   return (

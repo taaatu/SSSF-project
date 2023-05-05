@@ -1,10 +1,12 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-// import ReactStars from 'react-rating-stars-component';
 import { useEffect, useState } from 'react';
 import { useReviews } from '../hooks/ReviewHooks';
 import { Review, ReviewInput } from '../interfaces/Review';
 import StarRating from './StarRating';
+
+// Component for adding a review to an item. If the user has already reviewed
+// it shows the review and allows the user to delete it.
 
 function AddReview({ itemId }: { itemId: string }) {
   const [text, setText] = useState<string>('');
@@ -12,18 +14,13 @@ function AddReview({ itemId }: { itemId: string }) {
   const [oldReview, setOldReview] = useState<Review>();
   const { addReview, getReviewByUser, deleteReview } = useReviews();
 
-  //   const reviewChanged = (newReview: number) => {
-  //     setReview(newReview);
-  //   };
-
   const getOldReview = async () => {
     const res = await getReviewByUser(itemId);
     if (res === undefined) return;
-    console.log('getOldReview', res);
     setOldReview(res);
   };
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     if (review === undefined) return alert('Please rate first');
     const data: ReviewInput = {
       item: itemId,
@@ -56,25 +53,22 @@ function AddReview({ itemId }: { itemId: string }) {
         <>
           <h4>Submit review</h4>
           <StarRating size={50} setRating={setReview} />
-          {/* <ReactStars size={50} onChange={reviewChanged} /> */}
           <textarea
             style={{ resize: 'none' }}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
-          <Button onClick={handleClick} style={{ marginTop: 10 }}>
+          <Button onClick={handleSubmit} style={{ marginTop: 10 }}>
             Submit
           </Button>
         </>
       ) : (
         <>
           <h4>Your review</h4>
-          {/* <ReactStars edit={false} value={oldReview.value} size={50} /> */}
           <div style={{ display: 'none' }}>{oldReview.value}</div>
           <StarRating size={50} edit={false} value={oldReview.value} />
 
           <p>{oldReview.text}</p>
           <div className="flex-row" style={{ gap: 10 }}>
-            <Button>Edit</Button>
             <Button variant="danger" onClick={handleDelete}>
               Delete
             </Button>

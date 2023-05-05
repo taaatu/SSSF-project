@@ -6,9 +6,12 @@ import CheckIfLoggedIn from '../components/CheckIfLoggedIn';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../hooks/AuthHooks';
 
+// Login page
+
 function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -29,6 +32,7 @@ function Login() {
       <h1>Login</h1>
       <form className="my-form column" onSubmit={handleSubmit}>
         <input
+          required
           className="form-input"
           type="email"
           placeholder="Email"
@@ -36,6 +40,7 @@ function Login() {
         />
 
         <input
+          required
           className="form-input"
           type="password"
           placeholder="Password"

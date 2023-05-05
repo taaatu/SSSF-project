@@ -4,6 +4,8 @@ import { checkTokenQuery } from '../graphql/queriesUser';
 import { Navigate } from 'react-router-dom';
 import { graphqlUrl } from '../utils/url';
 
+// Cheks if user is logged in then redirects to home page
+
 function CheckIfLoggedIn() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const token = localStorage.getItem('token');
@@ -14,20 +16,16 @@ function CheckIfLoggedIn() {
       return;
     }
     try {
-      // const url = 'http://localhost:3000/graphql';
       const isTokenValid = await doGraphQLFetch(
         graphqlUrl,
         checkTokenQuery,
         {},
         token
       );
-      console.log('isTokenValid', isTokenValid);
       if (isTokenValid.checkToken?.message === 'Token is valid') {
-        console.log('token valid');
         setIsLoggedIn(true);
       }
     } catch (error) {
-      console.error('check token', error);
       setIsLoggedIn(false);
     }
   };

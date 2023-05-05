@@ -4,6 +4,9 @@ import { fileUrl } from '../utils/url';
 import Card from 'react-bootstrap/Card';
 import ShowAvgReview from './ShowAvgReview';
 
+// A component that displays the preview of an item. Takes item data as props.
+// When clicked, it will navigate to the item page.
+
 function ItemCard({ item }: { item: ItemCardData }) {
   const navigate = useNavigate();
 
@@ -16,14 +19,12 @@ function ItemCard({ item }: { item: ItemCardData }) {
       style={{ width: '18rem' }}
       onClick={handleClick}
     >
-      {/* <div>{item.item_name}</div> */}
       <ShowAvgReview itemId={item.id} partial={true} />
       <Card.Img
         variant="top"
         className="card-img"
         src={`${fileUrl}${item.filename}_thumb`}
       />
-      {/* <img className="card-img" src={`${fileUrl}${item.filename}`}></img> */}
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>
         <Card.Text>
