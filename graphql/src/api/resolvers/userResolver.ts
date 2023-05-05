@@ -19,6 +19,9 @@ import {
   CheckTokenResponse,
   UserMessageResponse,
 } from '../../interfaces/UserMessageResponse';
+import itemModel from '../models/itemModel';
+import rentDealModel from '../models/rentDealModel';
+import reviewModel from '../models/reviewModel';
 
 const salt = bcrypt.genSaltSync(12);
 
@@ -145,6 +148,12 @@ export default {
           extensions: { code: 'UNAUTHORIZED' },
         });
       }
+      const userid = new Types.ObjectId(user.id);
+      // delete all items, rentDeals and reviews associated with the user
+      await itemModel.deleteMany({ owner: userid });
+      await rentDealModel.deleteMany({ item_user: userid });
+      await rentDealModel.deleteMany({ item_owner: userid });
+      await reviewModel.deleteMany({ user: user.id });
       const result = await userModel.findByIdAndDelete(user.id);
       if (!result) {
         throw new GraphQLError('User not found', {

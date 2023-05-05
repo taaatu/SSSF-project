@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import { doGraphQLFetch } from '../graphql/fetch';
-import { itemsQuery } from '../graphql/queriesItem';
-import { graphqlUrl } from '../utils/url';
 import { ItemCardData } from '../interfaces/Item';
 import ItemCard from './ItemCard';
 import { useItem } from '../hooks/ItemHooks';
