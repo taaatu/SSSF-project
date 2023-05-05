@@ -30,6 +30,10 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+          rm -rf graphql/test
+          rm -rf graphql/src
+          rm -rf client
+          rm -rf upload
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
