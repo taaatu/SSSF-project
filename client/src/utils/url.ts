@@ -1,5 +1,5 @@
-const graphqlUrl = import.meta.env.VITE_GRAPHQL_URL;
-const uploadUrl = import.meta.env.VITE_UPLOAD_URL;
-const fileUrl = import.meta.env.VITE_FILE_URL;
+const graphqlUrl = import.meta.env.VITE_SERVER_URL + '/graphql';
+const uploadUrl = import.meta.env.VITE_SERVER_URL + '/api/upload/upload';
+const fileUrl = import.meta.env.VITE_SERVER_URL + '/uploads/';
 
 export { graphqlUrl, fileUrl, uploadUrl };

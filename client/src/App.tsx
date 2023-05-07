@@ -17,7 +17,7 @@ import Home from './pages/Home';
 import Logout from './pages/Logout';
 import ItemPage from './pages/ItemPage';
 import ModifyItem from './pages/ModifyItem';
-import Profile from './pages/Profile';
+import Profile from './pages/profile';
 import CreateRentDeal from './pages/CreateRentDeal';
 import TopNavBar from './components/TopNavBar';
 import { MainProvider } from './context/MainContext';

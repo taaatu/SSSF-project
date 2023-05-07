@@ -2,11 +2,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Item, ModifyItemInput } from '../interfaces/Item';
 import { useEffect, useState } from 'react';
 import { Category } from '../interfaces/Category';
-import { uploadFile } from '../utils/uploadFile';
+import { uploadFile } from '../utils/file';
 import { Button, Form } from 'react-bootstrap';
 import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
 import { Point } from 'geojson';
-import AddLocationMap from '../components/AddLocationMap';
+import AddLocationMap from '../components/map/AddLocationMap';
 import { useItem } from '../hooks/ItemHooks';
 import { useCategory } from '../hooks/CategoryHooks';
 

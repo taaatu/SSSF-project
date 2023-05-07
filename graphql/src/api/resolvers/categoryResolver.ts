@@ -1,7 +1,7 @@
 import { Category } from '../../interfaces/Category';
 import { UserIdWithToken } from '../../interfaces/User';
 import categoryModel from '../models/categoryModel';
-import checkAuthorization from '../../utils/checkAuthorization';
+import { checkAuthorization } from '../../utils/checkAuthorization';
 import { Item } from '../../interfaces/Item';
 import { GraphQLError } from 'graphql';
 import { Types } from 'mongoose';

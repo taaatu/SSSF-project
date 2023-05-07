@@ -14,7 +14,7 @@ type RentDeal {
 enum Status {
   PENDING
   ACCEPTED
-  REJECTED
+  DECLINED
   RETURNED
 }
 
@@ -32,7 +32,7 @@ type Mutation {
     end_date: DateTime!
     item_owner: ID!
   ): RentDeal!
-  acceptRentDeal(rent_deal_id: ID!): RentDeal!
-  rejectRentDeal(rent_deal_id: ID!): RentDeal!
+  respondRentDeal(id: ID!, accept: Boolean!): RentDeal!
   endRentDeal(rent_deal_id: ID!): RentDeal!
+  deleteRentDeal(id: ID!): RentDeal!
 }

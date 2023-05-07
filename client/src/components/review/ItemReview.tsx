@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Review } from '../interfaces/Review';
-import { useReviews } from '../hooks/ReviewHooks';
+import { Review } from '../../interfaces/Review';
+import { useReviews } from '../../hooks/ReviewHooks';
 import Card from 'react-bootstrap/Card';
 import AddReview from './AddReview';
-import StarRating from './StarRating';
+import StarRating from '../StarRating';
 
 // This component displays the add review form and the list of reviews for an item.
 

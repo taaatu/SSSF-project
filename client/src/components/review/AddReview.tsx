@@ -1,9 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import { useReviews } from '../hooks/ReviewHooks';
-import { Review, ReviewInput } from '../interfaces/Review';
-import StarRating from './StarRating';
+import { useReviews } from '../../hooks/ReviewHooks';
+import { Review, ReviewInput } from '../../interfaces/Review';
+import StarRating from '../StarRating';
 
 // Component for adding a review to an item. If the user has already reviewed
 // it shows the review and allows the user to delete it.

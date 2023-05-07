@@ -1,5 +1,12 @@
 import { Types } from 'mongoose';
 
+enum RentDealStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  RETURNED = 'RETURNED',
+}
+
 interface RentDeal extends Document {
   item: Types.ObjectId;
   start_date: Date;
@@ -7,7 +14,7 @@ interface RentDeal extends Document {
   created_date: Date;
   item_user: Types.ObjectId;
   item_owner: Types.ObjectId;
-  status: string;
+  status: RentDealStatus;
 }
 
 interface RentDealTest {
@@ -23,7 +30,7 @@ interface RentDealTest {
   itemUser?: Types.ObjectId;
   item_owner?: Types.ObjectId;
   itemOwner?: Types.ObjectId;
-  status?: string;
+  status?: RentDealStatus;
 }
 
-export { RentDeal, RentDealTest };
+export { RentDeal, RentDealTest, RentDealStatus };

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { RentDeal } from '../../interfaces/RentDeal';
+import { RentDeal, RentDealStatus } from '../../interfaces/RentDeal';
 
 const rentDealSchema = new mongoose.Schema<RentDeal>({
   item: {
@@ -32,8 +32,8 @@ const rentDealSchema = new mongoose.Schema<RentDeal>({
   },
   status: {
     type: String,
-    enum: ['PENDING', 'ACCEPTED', 'REJECTED', 'RETURNED'],
-    default: 'PENDING',
+    enum: RentDealStatus,
+    default: RentDealStatus.PENDING,
     required: true,
   },
 });

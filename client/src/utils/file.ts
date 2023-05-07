@@ -1,9 +1,7 @@
 import UploadMessageResponse from '../interfaces/UploadMessageResponse';
-import { uploadUrl } from './url';
+import { fileUrl, uploadUrl } from './url';
 
-export const uploadFile = async (
-  file: File
-): Promise<UploadMessageResponse> => {
+const uploadFile = async (file: File): Promise<UploadMessageResponse> => {
   const formData = new FormData();
   formData.append('item', file);
   const res = await fetch(uploadUrl, {
@@ -16,3 +14,7 @@ export const uploadFile = async (
   const json = (await res.json()) as UploadMessageResponse;
   return json;
 };
+
+const getThumnail = (filename: string): string => `${fileUrl}${filename}_thumb`;
+
+export { uploadFile, getThumnail };

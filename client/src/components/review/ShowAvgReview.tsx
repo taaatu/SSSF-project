@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useReviews } from '../hooks/ReviewHooks';
+import { useReviews } from '../../hooks/ReviewHooks';
 import Card from 'react-bootstrap/esm/Card';
-import StarRating from './StarRating';
+import StarRating from '../StarRating';
 
 // A component that shows the average review of an item
 // if props partial is true, it will only show the stars

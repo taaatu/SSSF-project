@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fileUrl } from '../utils/url';
 import { Item } from '../interfaces/Item';
-import ShowLocation from '../components/ShowLocation';
+import ShowLocation from '../components/map/ShowLocation';
 import { Button, Card } from 'react-bootstrap';
 import useUser from '../hooks/UserHook';
-import ItemReviews from '../components/ItemReview';
-import ShowAvgReview from '../components/ShowAvgReview';
+import ItemReviews from '../components/review/ItemReview';
+import ShowAvgReview from '../components/review/ShowAvgReview';
 import { useItem } from '../hooks/ItemHooks';
 
 // Page to show the details of an item
@@ -40,7 +40,7 @@ function ItemPage() {
           <Card.Img id="item-img" src={`${fileUrl}${item.filename}`} />
           <Card.Body id="item-body">
             <h2>{item.item_name}</h2>
-            <p>{item.description}</p>
+            <p className="description-text">{item.description}</p>
             <div>
               owner:{' '}
               <Link to={`/profile/${item.owner.user_name}`}>

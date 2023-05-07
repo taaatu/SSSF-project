@@ -16,11 +16,15 @@ import {
 } from './itemFunctions';
 import { Point } from 'geojson';
 import { RentDealTest } from '../src/interfaces/RentDeal';
-import { postRentDeal } from './rentDealDunctions';
+import {
+  respondRentDeal,
+  postRentDeal,
+  deleteRentDeal,
+} from './rentDealFunctions';
 import { ReviewTest } from '../src/interfaces/Review';
 import { postReview, userDeleteReview } from './reviewFunctions';
 
-// const uploadApp = process.env.UPLOAD_URL as string;
+const uploadApp = process.env.UPLOAD_URL as string;
 
 describe('Testing graphql api', () => {
   beforeAll(async () => {
@@ -52,7 +56,7 @@ describe('Testing graphql api', () => {
   let userAdmin: LoginMessageResponse;
   it('should login as admin', async () => {
     const data: UserTest = {
-      email: 'admin@test.com',
+      email: process.env.ADMIN_EMAIL,
       password: process.env.ADMIN_PW,
     };
     userAdmin = await loginUser(app, data);
@@ -69,10 +73,11 @@ describe('Testing graphql api', () => {
   let itemData: ItemTest;
   let testItem: Item;
 
-  // test upload file
-  // it('should upload a file', async () => {
-  //   uploadData = await postFile(uploadApp, userData.token!);
-  // });
+  //  test upload file
+  it('should upload a file', async () => {
+    uploadData = await postFile(uploadApp, userData.token!);
+  });
+
   const testLocation = {
     type: 'Point',
     coordinates: [24.9384, 60.1699],
@@ -110,6 +115,8 @@ describe('Testing graphql api', () => {
     await userPutItem(app, newItem, itemId, userAdmin.token!);
   });
 
+  let rentDealId: string;
+  let rentDealId2: string;
   it('should create a rent deal', async () => {
     const rentDeal: RentDealTest = {
       item: new mongoose.Types.ObjectId(itemId),
@@ -117,7 +124,21 @@ describe('Testing graphql api', () => {
       endDate: new Date('2021-04-30'),
       itemOwner: new mongoose.Types.ObjectId(testItem.owner.id),
     };
-    await postRentDeal(app, rentDeal, userData.token!);
+    const response = (await postRentDeal(
+      app,
+      rentDeal,
+      userData.token!
+    )) as RentDealTest;
+    rentDealId = response.id!;
+  });
+
+  it('should accept the rent deal', async () => {
+    const args = { id: rentDealId, accept: true };
+    await respondRentDeal(app, args, userData.token!);
+  });
+
+  it('admin should delete a non pending rent deal', async () => {
+    await deleteRentDeal(app, rentDealId, userAdmin.token!);
   });
 
   let reviewId: string;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ItemCardData } from '../interfaces/Item';
-import ItemCard from './ItemCard';
+import ItemCard from './cards/ItemCard';
 import { useItem } from '../hooks/ItemHooks';
 
 // Component for displaying a list of items.

@@ -6,7 +6,7 @@ import { RentDealInput } from '../interfaces/RentDeal';
 import { useItem } from '../hooks/ItemHooks';
 import mongoose from 'mongoose';
 import { Item, ItemCardData } from '../interfaces/Item';
-import ItemCard from '../components/ItemCard';
+import ItemCard from '../components/cards/ItemCard';
 import Stack from 'react-bootstrap/esm/Stack';
 import Button from 'react-bootstrap/esm/Button';
 import Card from 'react-bootstrap/esm/Card';

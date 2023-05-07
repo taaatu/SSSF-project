@@ -52,8 +52,7 @@ app.use('/uploads', express.static('uploads'));
       permissions
     );
     const server = new ApolloServer<MyContext>({
-      typeDefs,
-      resolvers,
+      schema,
       introspection: true,
       plugins: [
         process.env.NODE_ENV === 'production'

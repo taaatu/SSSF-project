@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Point } from 'geojson';
 import { ItemInput } from '../interfaces/Item';
-import { uploadFile } from '../utils/uploadFile';
-import AddLocationMap from '../components/AddLocationMap';
+import { uploadFile } from '../utils/file';
+import AddLocationMap from '../components/map/AddLocationMap';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { descriptionMaxLength, titleMaxLength } from '../utils/validation';

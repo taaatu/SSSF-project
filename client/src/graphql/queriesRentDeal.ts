@@ -11,10 +11,61 @@ mutation CreateRentDeal($item: ID!, $startDate: DateTime!, $endDate: DateTime!, 
 
 const rentDealsSentQuery = `
 query {
-    rentDealsSent {
-      created_date
-    } 
+  rentDealsSent {
+    id
+    item {
+      item_name
+    }
+    start_date
+    end_date
+    status
+    item_owner {
+      user_name
+    }
   }
+}
 `;
 
-export { createRentDealQuery, rentDealsSentQuery };
+const rentDealsReceivedQuery = `
+query {
+  rentDealsReceived {
+    id
+    item {
+      item_name
+    }
+    item_user {
+      user_name
+    }
+    status
+    start_date
+    end_date
+  }
+}
+`;
+
+const respondRentDealQuery = `
+mutation RespondRentDeal($id: ID!, $accept: Boolean!) {
+  respondRentDeal(id: $id, accept: $accept) {
+    id
+    item {
+      item_name
+    }
+    status
+  }
+}`;
+
+const deleteRentDealQuery = `
+mutation DeleteRentDeal($id: ID!) {
+  deleteRentDeal(id: $id) {
+    id
+  }
+}
+`;
+
+export {
+  createRentDealQuery,
+  rentDealsSentQuery,
+  rentDealsReceivedQuery,
+  respondRentDealQuery,
+  deleteRentDealQuery,
+};

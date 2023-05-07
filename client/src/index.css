@@ -180,3 +180,7 @@ textarea {
 #rent-deal-page {
   padding: 2em;
 }
+
+.description-text {
+  white-space: pre-line;
+}

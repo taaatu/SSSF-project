@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { ItemCardData } from '../interfaces/Item';
-import { fileUrl } from '../utils/url';
+import { ItemCardData } from '../../interfaces/Item';
 import Card from 'react-bootstrap/Card';
-import ShowAvgReview from './ShowAvgReview';
+import ShowAvgReview from '../review/ShowAvgReview';
+import { getThumnail } from '../../utils/file';
 
 // A component that displays the preview of an item. Takes item data as props.
 // When clicked, it will navigate to the item page.
@@ -23,7 +23,7 @@ function ItemCard({ item }: { item: ItemCardData }) {
       <Card.Img
         variant="top"
         className="card-img"
-        src={`${fileUrl}${item.filename}_thumb`}
+        src={getThumnail(item.filename)}
       />
       <Card.Body>
         <Card.Title>{item.item_name}</Card.Title>

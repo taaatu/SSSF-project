@@ -45,6 +45,9 @@ export default {
     item_user: async (parent: RentDeal) => {
       return await getUser(parent.item_user);
     },
+    item_owner: async (parent: RentDeal) => {
+      return await getUser(parent.item_user);
+    },
   },
   Review: {
     user: async (parent: Review) => {
