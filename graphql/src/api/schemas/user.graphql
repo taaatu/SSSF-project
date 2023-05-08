@@ -11,6 +11,11 @@ type TokenMessage {
   user: User!
 }
 
+type UserNameId {
+  user_name: String!
+  id: ID!
+}
+
 input Credentials {
   username: String!
   password: String!
@@ -30,7 +35,7 @@ input UserModify {
 
 type Query {
   users: [User]
-  userByUsername(username: String!): User
+  userByUsername(username: String!): UserNameId!
   checkToken: TokenMessage
 }
 

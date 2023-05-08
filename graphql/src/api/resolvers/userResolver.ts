@@ -64,7 +64,7 @@ export default {
           extensions: { code: 'NOT_FOUND' },
         });
       }
-      return user;
+      return user as UserNameId;
     },
     checkToken: async (
       _parent: unknown,
