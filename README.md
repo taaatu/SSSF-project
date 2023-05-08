@@ -16,6 +16,8 @@ I decided to make an item renting app which users can use to rent their items to
 - Users can respond to received rent requests
   - Accept / Decline
 - Users can delete the rent requests that are still pending
+- User profile page
+  - Sent and received rent requests and own items
 
 ## Getting started
 
