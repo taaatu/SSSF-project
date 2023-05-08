@@ -24,3 +24,5 @@ I decided to make an item renting app which users can use to rent their items to
 - clone repo:
 `git clone https://github.com/taaatu/SSSF-project.git`
 - install dependencies: `npm i && cd client && npm i`
+- create two `.env` files. One in root and another to client folder
+  - based on the `.env.exampe` files
