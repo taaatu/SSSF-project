@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Point } from 'geojson';
 import { ItemInput } from '../interfaces/Item';
 import { uploadFile } from '../utils/file';
@@ -7,8 +7,9 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { descriptionMaxLength, titleMaxLength } from '../utils/validation';
 import { useItem } from '../hooks/ItemHooks';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useCategory } from '../hooks/CategoryHooks';
+import { MainContext } from '../context/MainContext';
 
 // Page for creating a new item
 
@@ -23,6 +24,7 @@ function CreateItem() {
   const { categories } = useCategory();
   const { createItem } = useItem();
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(MainContext);
 
   const openMap = (event: any) => {
     event.preventDefault();
@@ -60,6 +62,10 @@ function CreateItem() {
     alert('Item created');
     navigate('/');
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>

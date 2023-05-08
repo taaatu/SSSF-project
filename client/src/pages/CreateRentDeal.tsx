@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import React from 'react';
 import useRentDeal from '../hooks/RentDealHooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { RentDealInput } from '../interfaces/RentDeal';
 import { useItem } from '../hooks/ItemHooks';
 import mongoose from 'mongoose';
@@ -10,6 +10,7 @@ import ItemCard from '../components/cards/ItemCard';
 import Stack from 'react-bootstrap/esm/Stack';
 import Button from 'react-bootstrap/esm/Button';
 import Card from 'react-bootstrap/esm/Card';
+import { MainContext } from '../context/MainContext';
 
 // A page to send a rent request
 
@@ -18,6 +19,7 @@ function CreateRentDeal() {
   const { createRentDeal } = useRentDeal();
   const { getItemById } = useItem();
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(MainContext);
 
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
@@ -54,6 +56,10 @@ function CreateRentDeal() {
   useEffect(() => {
     getItem();
   }, []);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div id="rent-deal-page">

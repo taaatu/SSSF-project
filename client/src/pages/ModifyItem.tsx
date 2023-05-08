@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Item, ModifyItemInput } from '../interfaces/Item';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Category } from '../interfaces/Category';
 import { uploadFile } from '../utils/file';
 import { Button, Form } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import { Point } from 'geojson';
 import AddLocationMap from '../components/map/AddLocationMap';
 import { useItem } from '../hooks/ItemHooks';
 import { useCategory } from '../hooks/CategoryHooks';
+import { MainContext } from '../context/MainContext';
 
 // Page for modifying an item
 
@@ -25,6 +26,7 @@ function ModifyItem() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [mapIsOpen, setMapIsOpen] = useState<boolean>(false);
   const [coordinates, setCoordinates] = useState<number[]>();
+  const { isLoggedIn } = useContext(MainContext);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,6 +76,10 @@ function ModifyItem() {
   useEffect(() => {
     getItem();
   }, []);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
