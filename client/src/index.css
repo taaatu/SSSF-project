@@ -184,3 +184,7 @@ textarea {
 .description-text {
   white-space: pre-line;
 }
+
+.flex-wrap {
+  flex-wrap: wrap;
+}

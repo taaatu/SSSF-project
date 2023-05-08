@@ -25,7 +25,7 @@ function Profile() {
     <div style={{ padding: '2em' }}>
       <h1>Profile page {username}</h1>
       {currentUser !== undefined && currentUser.id === userid && (
-        <LoggedUserView />
+        <LoggedUserView userid={currentUser.id} />
       )}
     </div>
   );

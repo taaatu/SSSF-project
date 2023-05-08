@@ -20,12 +20,11 @@ function RentDealCardSent({ rentDeal }: { rentDeal: RentDealOutput }) {
     setUpdate(update + 1);
   };
   return (
-    <Card key={rentDeal.id} className="fit-content">
+    <Card key={rentDeal.id} style={{ width: '300px' }}>
       <div>Item: {rentDeal.item.item_name}</div>
       <div>User: {rentDeal.item_owner.user_name}</div>
       <div>Starts: {format(new Date(rentDeal.start_date), 'dd.MM.yyyy')}</div>
       <div>Ends: {format(new Date(rentDeal.end_date), 'dd.MM.yyyy')}</div>
-      {/* <div>End date: {rentDeal.end_date}</div> */}
       {rentDeal.status === 'PENDING' ? (
         <Button variant="danger" onClick={handleDelete}>
           Delete

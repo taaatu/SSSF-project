@@ -64,6 +64,23 @@ query ($id: ID!) {
 }
 `;
 
+const itemsByUserQuery = `
+query($id: ID!) {
+  itemsByOwner(owner:$id) {
+    id
+    item_name
+    created_date
+    owner {
+      user_name
+    }
+    category {
+      category_name
+    }
+    filename
+  }
+}
+`;
+
 const deleteItemQuery = `
 mutation DeleteItem($id: ID!) {
   deleteItem(id: $id) {
@@ -78,4 +95,5 @@ export {
   itemByIdQuery,
   deleteItemQuery,
   modifyItemQuery,
+  itemsByUserQuery,
 };

@@ -5,6 +5,8 @@ type MainContextType = {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   update: number;
   setUpdate: React.Dispatch<React.SetStateAction<number>>;
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const MainContext = React.createContext<MainContextType>({} as MainContextType);
 
@@ -13,6 +15,7 @@ const MainProvider = (props: { children: React.ReactNode }) => {
     localStorage.getItem('token') !== null
   );
   const [update, setUpdate] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <MainContext.Provider
@@ -21,6 +24,8 @@ const MainProvider = (props: { children: React.ReactNode }) => {
         setIsLoggedIn,
         update,
         setUpdate,
+        isLoading,
+        setIsLoading,
       }}
     >
       {props.children}

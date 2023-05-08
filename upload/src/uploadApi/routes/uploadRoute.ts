@@ -4,7 +4,7 @@ import multer, {FileFilterCallback} from 'multer';
 import {authenticate, getCoordinates, makeThumbnail} from '../../middlewares';
 
 const fileFilter = (
-  request: Request,
+  _request: Request,
   file: Express.Multer.File,
   cb: FileFilterCallback
 ) => {
@@ -17,13 +17,8 @@ const fileFilter = (
 const upload = multer({dest: './uploads/', fileFilter});
 const router = express.Router();
 
-// TODO: Add auth middleware
-router.route('/').post(
-  authenticate,
-  upload.single('item'),
-  makeThumbnail,
-  // getCoordinates,
-  uploadPost
-);
+router
+  .route('/')
+  .post(authenticate, upload.single('item'), makeThumbnail, uploadPost);
 
 export default router;

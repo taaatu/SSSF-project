@@ -3,6 +3,7 @@ import {
   createItemQuery,
   deleteItemQuery,
   itemByIdQuery,
+  itemsByUserQuery,
   itemsQuery,
   modifyItemQuery,
 } from '../graphql/queriesItem';
@@ -38,7 +39,20 @@ const useItem = () => {
       const res = await doGraphQLFetch(graphqlUrl, itemByIdQuery, { id });
       return res.itemById as Item;
     } catch (error) {
-      console.error('getItemById', error);
+      console.error('item by id', error);
+    }
+  };
+  const getItemsByUser = async (itemId: string) => {
+    try {
+      const res = await doGraphQLFetch(graphqlUrl, itemsByUserQuery, {
+        id: itemId,
+      });
+      console.log(res);
+      if (!res.itemsByOwner) return [];
+      return res.itemsByOwner as Item[];
+    } catch (error) {
+      console.error('items by user', error);
+      return [];
     }
   };
   const modifyItem = async (data: ModifyItemInput) => {
@@ -71,7 +85,14 @@ const useItem = () => {
       console.error('delete item', error);
     }
   };
-  return { getItemById, createItem, getItems, deleteItem, modifyItem };
+  return {
+    getItemById,
+    createItem,
+    getItems,
+    deleteItem,
+    modifyItem,
+    getItemsByUser,
+  };
 };
 
 export { useItem };

@@ -25,6 +25,10 @@ export default {
       const id = new Types.ObjectId(args);
       return await itemModel.findById(id);
     },
+    itemsByOwner: async (_parent: undefined, args: { owner: string }) => {
+      const id = new Types.ObjectId(args.owner);
+      return await itemModel.find({ owner: id });
+    },
   },
   Mutation: {
     createItem: async (
