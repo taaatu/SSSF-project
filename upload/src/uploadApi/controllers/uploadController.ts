@@ -17,7 +17,6 @@ const uploadPost = async (
       message: 'file uploaded',
       data: {
         filename: req.file.filename,
-        location: res.locals.coords,
       },
     };
     res.json(response);
