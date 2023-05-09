@@ -71,9 +71,6 @@ app.use('/uploads', express.static('uploads'));
         context: async ({ req }) => authenticate(req),
       })
     );
-
-    // app.use(notFound);
-    // app.use(errorHandler);
   } catch (error) {
     console.log(error);
   }
