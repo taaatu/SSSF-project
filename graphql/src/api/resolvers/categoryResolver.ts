@@ -32,9 +32,7 @@ export default {
       args: string,
       user: UserIdWithToken
     ) => {
-      console.log('///deleteCategory');
       if (!user.token || user.role !== 'admin') {
-        console.log('///not authorized');
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
         });

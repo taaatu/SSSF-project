@@ -12,7 +12,7 @@ const itemSchema = new mongoose.Schema<Item>({
     type: Date,
     default: Date.now,
     immutable: true,
-    // required: true,
+    required: true,
   },
   description: {
     type: String,

@@ -18,27 +18,15 @@ export default {
       args: string,
       user: UserIdWithToken
     ) => {
-      // console.log('///reviewByUserAndItem', { args: args, user: user.id });
-      console.log('///ARGS', args);
-      // console.log('///USER', user);
       if (!user.token) {
-        console.log('///no token');
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
         });
       }
 
-      // console.log('///here', args);
       const itemid = new Types.ObjectId(args);
       const userid = new Types.ObjectId(user.id);
-      // console.log('///itemid', itemid);
 
-      // const t = await reviewModel.find({
-      //   item: itemid,
-      // });
-      // console.log('///t', t);
-      // return t[0];
-      // return await reviewModel.find();
       return await reviewModel.findOne({
         user: userid,
         item: itemid,
@@ -65,9 +53,9 @@ export default {
       });
 
       if (duplicates.length > 0) {
-        console.log('duplicates found');
-        console.log(duplicates[0]);
-        return;
+        throw new GraphQLError('Review already exists', {
+          extensions: { code: 'DUPLICATE' },
+        });
       }
 
       args.user = userId;
@@ -76,7 +64,6 @@ export default {
       const result = await review.save();
       return result;
     },
-    modifyReview: async () => {},
     deleteReview: async (
       _parent: undefined,
       args: string,
@@ -88,11 +75,7 @@ export default {
       const userId = new Types.ObjectId(user.id);
       const ownerId = review?.user;
 
-      if (
-        !user.token ||
-        (!review?.user.equals(userId) && user.role !== 'admin')
-      ) {
-        console.log('not owner');
+      if (!user.token || (!ownerId.equals(userId) && user.role !== 'admin')) {
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
         });

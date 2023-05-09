@@ -56,7 +56,6 @@ export default {
         !user.token ||
         (!item.owner.equals(user.id) && user.role !== 'admin')
       ) {
-        console.log('not authorized');
         throw new GraphQLError('Not authorized', {
           extensions: { code: 'NOT_AUTHORIZED' },
         });
@@ -77,7 +76,6 @@ export default {
       const ownerId = item?.owner;
 
       if (!user.token || (!ownerId.equals(userId) && user.role !== 'admin')) {
-        console.log('not owner');
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
         });

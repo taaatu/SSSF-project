@@ -19,6 +19,7 @@ const rentDealSchema = new mongoose.Schema<RentDeal>({
     type: Date,
     default: Date.now,
     required: true,
+    immutable: true,
   },
   item_user: {
     type: mongoose.Schema.Types.ObjectId,

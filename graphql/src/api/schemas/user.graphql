@@ -27,14 +27,7 @@ input UserInput {
   password: String!
 }
 
-input UserModify {
-  user_name: String
-  email: String
-  password: String
-}
-
 type Query {
-  users: [User]
   userByUsername(username: String!): UserNameId!
   checkToken: TokenMessage
 }
@@ -42,6 +35,5 @@ type Query {
 type Mutation {
   login(credentials: Credentials!): TokenMessage
   register(user: UserInput!): TokenMessage
-  updateUser(user: UserModify!): TokenMessage
   deleteUser: TokenMessage
 }

@@ -11,7 +11,6 @@ import LoginMessageResponse from '../../interfaces/LoginMessageResponse';
 import { Item } from '../../interfaces/Item';
 import { RentDeal } from '../../interfaces/RentDeal';
 import { Review } from '../../interfaces/Review';
-// import getUser from '../../utils/getUser';
 import userModel from '../models/userModel';
 import { Credentials } from '../../interfaces/Credentials';
 import { Types } from 'mongoose';
@@ -91,10 +90,11 @@ export default {
       const user = await userModel.findOne({
         email: args.credentials.username,
       });
-      if (
-        !user ||
-        !bcrypt.compareSync(args.credentials.password, user.password)
-      ) {
+      const isPasswordValid = bcrypt.compareSync(
+        args.credentials.password,
+        user!.password
+      );
+      if (!user || !isPasswordValid) {
         const response: LoginMessageResponse = {
           message: 'Incorrect username/password',
         };
@@ -152,11 +152,13 @@ export default {
         });
       }
       const userid = new Types.ObjectId(user.id);
+
       // delete all items, rentDeals and reviews associated with the user
       await itemModel.deleteMany({ owner: userid });
       await rentDealModel.deleteMany({ item_user: userid });
       await rentDealModel.deleteMany({ item_owner: userid });
       await reviewModel.deleteMany({ user: user.id });
+
       const result = await userModel.findByIdAndDelete(user.id);
       if (!result) {
         throw new GraphQLError('User not found', {

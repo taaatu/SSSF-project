@@ -1,11 +1,8 @@
 import { GraphQLError } from 'graphql';
-import { Item } from '../../interfaces/Item';
 import { UserIdWithToken } from '../../interfaces/User';
 import { RentDeal, RentDealStatus } from '../../interfaces/RentDeal';
 import { Types } from 'mongoose';
 import rentDealModel from '../models/rentDealModel';
-import { checkAuthorization } from '../../utils/checkAuthorization';
-import { compareSync } from 'bcryptjs';
 
 export default {
   Query: {
@@ -42,8 +39,9 @@ export default {
           extensions: { code: 'UNAUTHORIZED' },
         });
       }
+      const userid = new Types.ObjectId(user.id);
       return await rentDealModel.find({
-        item_user: user.id as unknown as Types.ObjectId,
+        item_user: userid,
       });
     },
   },
@@ -80,6 +78,7 @@ export default {
       const userid = new Types.ObjectId(user.id);
       const isOwner = userid.equals(rentDeal.item_owner);
       const isPending = rentDeal.status === RentDealStatus.PENDING;
+
       if (!user.token || !isOwner || !isPending) {
         throw new GraphQLError('Unauthorized', {
           extensions: { code: 'UNAUTHORIZED' },
@@ -101,7 +100,6 @@ export default {
       args: string,
       user: UserIdWithToken
     ) => {
-      console.log('user role', user.role);
       const userid = new Types.ObjectId(user.id);
       const rentDealId = new Types.ObjectId(args);
       const rentDeal = (await rentDealModel.findById(rentDealId)) as RentDeal;
@@ -116,7 +114,6 @@ export default {
       const isPending = rentDeal.status === RentDealStatus.PENDING;
       if (!user.token || user.role !== 'admin') {
         if (!isSender || !isPending) {
-          console.log('not authorized');
           throw new GraphQLError('Unauthorized', {
             extensions: { code: 'UNAUTHORIZED' },
           });
