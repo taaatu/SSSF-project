@@ -2,7 +2,14 @@
 
 This is the Server-side Scripting Frameworks course project. The task was to develop a GraphQL backend with Node.js and build a frontend with preferred framework. 
 I decided to make an item renting app which users can use to rent their items to others.
-
+## Tech stack
+#### Backend
+- GraphQL
+- Node.js
+- MongoDB / Mongoose
+#### Frontend
+- React (Vite)
+- React Bootsrap (styling)
 ## App features
 #### Users can:
 - add their own items
@@ -26,3 +33,5 @@ I decided to make an item renting app which users can use to rent their items to
 - install dependencies: `npm i && cd client && npm i`
 - create two `.env` files. One in root and another to client folder
   - based on the `.env.exampe` files
+- `npm run dev` to start backend development server
+- `cd client && npm run dev` to start the client app in dev mode
