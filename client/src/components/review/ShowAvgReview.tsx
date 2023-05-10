@@ -6,13 +6,12 @@ import StarRating from '../StarRating';
 // A component that shows the average review of an item
 // if props partial is true, it will only show the stars
 
-function ShowAvgReview({
-  itemId,
-  partial = false,
-}: {
+type Props = {
   itemId: string;
-  partial?: boolean;
-}) {
+  partial: boolean;
+};
+
+function ShowAvgReview({ itemId, partial = false }: Props) {
   const [review, setReview] = useState<number>();
   const [count, setCount] = useState<number>(0);
   const { getReviewsByItem } = useReviews();

@@ -7,8 +7,9 @@ import { getThumnail } from '../../utils/file';
 // A component that displays the preview of an item. Takes item data as props.
 // When clicked, it will navigate to the item page.
 
-function ItemCard({ item }: { item: ItemCardData }) {
+function ItemCard(props: { item: ItemCardData }) {
   const navigate = useNavigate();
+  const item = props.item;
 
   const handleClick = () => {
     navigate(`/item/${item.id}`);

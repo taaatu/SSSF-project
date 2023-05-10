@@ -5,16 +5,15 @@ import Modal from 'react-bootstrap/Modal';
 
 // This component shows the item location on a map
 
-function ShowLocation({
-  setIsMapOpen,
-  coordinates,
-}: {
+type Props = {
   setIsMapOpen: Dispatch<SetStateAction<boolean>>;
   coordinates: number[] | undefined;
-}) {
-  const handleClose = () => setIsMapOpen(false);
+};
 
-  if (coordinates === undefined) {
+function ShowLocation(props: Props) {
+  const handleClose = () => props.setIsMapOpen(false);
+
+  if (props.coordinates === undefined) {
     return <></>;
   }
 
@@ -24,14 +23,14 @@ function ShowLocation({
         <Modal.Header closeButton onHide={handleClose}></Modal.Header>
         <MapContainer
           id="map-container"
-          center={coordinates as LatLngTuple}
+          center={props.coordinates as LatLngTuple}
           zoom={13}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={coordinates as LatLngTuple}>
+          <Marker position={props.coordinates as LatLngTuple}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>

@@ -6,7 +6,8 @@ import useRentDeal from '../../hooks/RentDealHooks';
 import { useContext } from 'react';
 import { MainContext } from '../../context/MainContext';
 
-function RentDealCardSent({ rentDeal }: { rentDeal: RentDealOutput }) {
+function RentDealCardSent(props: { rentDeal: RentDealOutput }) {
+  const rentDeal = props.rentDeal;
   const { deleteRentDeal } = useRentDeal(false);
   const { setUpdate, update } = useContext(MainContext);
 

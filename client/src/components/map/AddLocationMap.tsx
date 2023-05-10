@@ -12,31 +12,29 @@ import Modal from 'react-bootstrap/Modal';
 
 // Component for adding location to the map
 
-function AddLocationMap({
-  setCoordinates,
-  setIsMapOpen,
-  coordinates,
-}: {
+type Props = {
   setCoordinates: Dispatch<SetStateAction<number[] | undefined>>;
   setIsMapOpen: Dispatch<SetStateAction<boolean>>;
   coordinates: number[] | undefined;
-}) {
+};
+
+function AddLocationMap(props: Props) {
   const [markers, setMarkers] = useState<LatLngTuple | undefined>(
-    coordinates as LatLngTuple
+    props.coordinates as LatLngTuple
   );
   const SaveCoordinates = () => {
     useMapEvents({
       click: (e) => {
         const { lat, lng } = e.latlng;
         setMarkers([lat, lng]);
-        setCoordinates([lat, lng]);
+        props.setCoordinates([lat, lng]);
       },
     });
 
     return null;
   };
 
-  const handleClose = () => setIsMapOpen(false);
+  const handleClose = () => props.setIsMapOpen(false);
 
   return (
     <div id="map-view">

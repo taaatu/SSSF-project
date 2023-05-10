@@ -8,14 +8,14 @@ import StarRating from '../StarRating';
 // Component for adding a review to an item. If the user has already reviewed
 // it shows the review and allows the user to delete it.
 
-function AddReview({ itemId }: { itemId: string }) {
+function AddReview(props: { itemId: string }) {
   const [text, setText] = useState<string>('');
   const [review, setReview] = useState<number>();
   const [oldReview, setOldReview] = useState<Review>();
   const { addReview, getReviewByUser, deleteReview } = useReviews();
 
   const getOldReview = async () => {
-    const res = await getReviewByUser(itemId);
+    const res = await getReviewByUser(props.itemId);
     if (res === undefined) return;
     setOldReview(res);
   };
@@ -23,7 +23,7 @@ function AddReview({ itemId }: { itemId: string }) {
   const handleSubmit = async () => {
     if (review === undefined) return alert('Please rate first');
     const data: ReviewInput = {
-      item: itemId,
+      item: props.itemId,
       value: review,
       text: text,
     };
@@ -45,7 +45,7 @@ function AddReview({ itemId }: { itemId: string }) {
     getOldReview();
   }, []);
 
-  if (itemId === undefined) return <></>;
+  if (props.itemId === undefined) return <></>;
 
   return (
     <Card>

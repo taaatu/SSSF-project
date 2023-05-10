@@ -9,7 +9,9 @@ import { MainContext } from '../../context/MainContext';
 
 // This component displays the reant deal information
 
-function RentDealCardReceived({ rentDeal }: { rentDeal: RentDealOutput }) {
+function RentDealCardReceived(props: { rentDeal: RentDealOutput }) {
+  const rentDeal = props.rentDeal;
+
   const { respondToRentDeal } = useRentDeal(false);
   const { setUpdate, update } = useContext(MainContext);
 

@@ -7,12 +7,12 @@ import StarRating from '../StarRating';
 
 // This component displays the add review form and the list of reviews for an item.
 
-function ItemReviews({ itemId }: { itemId: string }) {
+function ItemReviews(props: { itemId: string }) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const { getReviewsByItem } = useReviews();
 
   const getReviews = async () => {
-    const res = await getReviewsByItem(itemId);
+    const res = await getReviewsByItem(props.itemId);
     if (!res || res.length === 0) return;
     setReviews(res);
   };
@@ -23,7 +23,7 @@ function ItemReviews({ itemId }: { itemId: string }) {
 
   return (
     <Card style={{ gap: '1em' }}>
-      <AddReview itemId={itemId} />
+      <AddReview itemId={props.itemId} />
       <div>
         <h1>Reviews ({reviews.length})</h1>
         <div id="reviews-list">

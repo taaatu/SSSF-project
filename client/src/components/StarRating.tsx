@@ -7,17 +7,14 @@ import { Dispatch, SetStateAction, useState } from 'react';
 //  size: the size of the stars
 //  edit: whether the user can edit the rating
 
-function StarRating({
-  value = 0,
-  edit = true,
-  size = 25,
-  setRating,
-}: {
+type Props = {
   value?: number;
   edit?: boolean;
   size?: number;
   setRating?: Dispatch<SetStateAction<number | undefined>>;
-}) {
+};
+
+function StarRating({ value = 0, edit = true, size = 25, setRating }: Props) {
   const [hover, setHover] = useState(value);
   const [selected, setSelected] = useState(0);
 
